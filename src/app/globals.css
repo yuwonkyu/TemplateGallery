@@ -1,1 +1,98 @@
 @import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #0b0e12;
+    --panel: #121821;
+    --panel-strong: #161d28;
+    --text: #e6edf3;
+    --muted: #9aa4b2;
+    --accent: #f4a340;
+    --accent-2: #4fd1c5;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans), "Space Grotesk", system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: rgba(244, 163, 64, 0.28);
+  }
+}
+
+@layer utilities {
+  .page-base {
+    min-height: 100vh;
+    background: var(--bg);
+    color: #ffffff;
+  }
+
+  .bg-grid {
+    background-image:
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(255, 255, 255, 0.06) 1px,
+        transparent 0
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        rgba(79, 209, 197, 0.08) 1px,
+        transparent 0
+      );
+    background-size:
+      40px 40px,
+      120px 120px;
+    background-position:
+      0 0,
+      20px 20px;
+  }
+
+  .text-muted {
+    color: var(--muted);
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .panel-strong {
+    background: var(--panel-strong);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .glow {
+    box-shadow: 0 0 40px rgba(79, 209, 197, 0.18);
+  }
+
+  .float-slow {
+    animation: float 10s ease-in-out infinite;
+  }
+
+  .fade-in {
+    animation: fade 0.8s ease both;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
