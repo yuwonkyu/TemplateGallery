@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,18 +27,43 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/shared/ui/*"],
-      "@hooks/*": ["src/shared/lib/hooks/*"],
-      "@utils/*": ["src/shared/lib/utils/*"],
-      "@types/*": ["src/shared/types/*"],
-      "@stores/*": ["src/shared/stores/*"],
-      "@constants/*": ["src/shared/constants/*"]
-    }
+      "@/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "src/shared/ui/*"
+      ],
+      "@hooks/*": [
+        "src/shared/lib/hooks/*"
+      ],
+      "@utils/*": [
+        "src/shared/lib/utils/*"
+      ],
+      "@types/*": [
+        "src/shared/types/*"
+      ],
+      "@stores/*": [
+        "src/shared/stores/*"
+      ],
+      "@constants/*": [
+        "src/shared/constants/*"
+      ]
+    },
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

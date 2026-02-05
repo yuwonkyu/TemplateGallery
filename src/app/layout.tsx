@@ -3,7 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Template Gallery",
-  description: "Next.js Template Gallery with TypeScript, Tailwind CSS, and FSD",
+  description:
+    "Next.js Template Gallery with TypeScript, Tailwind CSS, and FSD",
 };
 
 export default function RootLayout({
@@ -13,9 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="antialiased">
-        {children}
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
