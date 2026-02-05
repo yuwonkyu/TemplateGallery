@@ -1,0 +1,99 @@
+{
+  "common": {
+    "brand": "Portfolio Template Builder",
+    "cta": {
+      "explore": "Explore templates",
+      "openEditor": "Open the editor"
+    },
+    "filters": ["All", "Developer", "Artist", "Studio"],
+    "actions": {
+      "reset": "Reset",
+      "export": "Export HTML"
+    },
+    "preview": {
+      "label": "Preview",
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Build a portfolio without code, then export HTML you own.",
+      "description": "A focused editor for developers, designers, and artists who want a portfolio in a day. Keep editing locally, export anytime, and deploy wherever you choose."
+    },
+    "highlights": [
+      {
+        "title": "No-code portfolio editor",
+        "description": "Write the story, not the setup. Fill in your profile, projects, and sections from a clean UI."
+      },
+      {
+        "title": "Local save, always",
+        "description": "Your work persists in the browser. Close it today, continue tomorrow, no login required."
+      },
+      {
+        "title": "Export HTML you own",
+        "description": "Download a ready-to-deploy index.html + README guide for GitHub Pages, Vercel, or Netlify."
+      }
+    ],
+    "how": {
+      "title": "How it works",
+      "description": "The editor is built around structured data. Templates render what you write, so your portfolio stays portable."
+    },
+    "steps": [
+      "Pick a template made for your role.",
+      "Edit data in a structured, guided form.",
+      "Preview instantly on desktop + mobile.",
+      "Export and deploy anywhere you want."
+    ],
+    "focus": {
+      "title": "Built for focus",
+      "description": "No auto-deploy, no lock-in. You own the export and decide where it lives."
+    },
+    "mvp": {
+      "title": "MVP priorities",
+      "description": "Editor quality and export fidelity first. Logins, cloud save, and deployment integrations come later."
+    }
+  },
+  "templates": {
+    "label": "Template Gallery",
+    "title": "Pick a template that fits your story.",
+    "description": "Every template is designed to export a clean HTML file you fully own. Start with the layout that matches your role, then customize inside the editor.",
+    "items": [
+      {
+        "id": "dev-pro",
+        "title": "Developer Pro",
+        "summary": "Minimal layout for projects, experience, and tech stack.",
+        "tags": ["Developer", "Clean", "One-page"]
+      },
+      {
+        "id": "artist-grid",
+        "title": "Artist Grid",
+        "summary": "Visual grid with hero statement and featured works.",
+        "tags": ["Artist", "Visual", "Gallery"]
+      },
+      {
+        "id": "studio-classic",
+        "title": "Studio Classic",
+        "summary": "Timeline + case studies for studios and small teams.",
+        "tags": ["Studio", "Case study", "Multi-section"]
+      }
+    ]
+  },
+  "editor": {
+    "label": "Editor",
+    "title": "Build your portfolio in one flow.",
+    "description": "Fill in the structured fields on the left. Preview updates instantly on the right.",
+    "sectionsTitle": "Sections",
+    "sectionsDescription": "Reorder and edit each section. Saving happens automatically.",
+    "sections": [
+      "Profile",
+      "Hero Statement",
+      "Featured Projects",
+      "Timeline",
+      "Contact"
+    ],
+    "previewTitle": "Live Preview",
+    "previewName": "Your Name",
+    "previewHeadline": "Short headline about what you build and who you help."
+  }
+}
