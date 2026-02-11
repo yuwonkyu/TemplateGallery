@@ -2,6 +2,16 @@ import { getTranslations } from "next-intl/server";
 
 import type { Locale } from "@/i18n/config";
 import { Button, Container, Panel, Pill } from "@components/common";
+import {
+  ProfileForm,
+  HeroStatementForm,
+  FeaturedProjectsForm,
+  TimelineForm,
+  ContactForm,
+} from "@/shared/ui/editor";
+import { EditorSectionTabs } from "@/shared/ui/editor/EditorSectionTabs";
+import { EditorActions } from "@/shared/ui/editor/EditorActions";
+import { EditorPreviewWrapper } from "@/shared/ui/editor/EditorPreviewWrapper";
 
 type PageProps = {
   params: Promise<{
@@ -28,70 +38,28 @@ const EditorPage = async ({ params }: PageProps) => {
               {t("description")}
             </p>
           </div>
-          <div className="flex gap-3">
-            <Button variant="outline" size="sm" type="button">
-              {common("actions.reset")}
-            </Button>
-            <Button size="sm" type="button">
-              {common("actions.export")}
-            </Button>
-          </div>
+          <EditorActions
+            resetLabel={common("actions.reset")}
+            exportLabel={common("actions.export")}
+          />
         </header>
 
         <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <Panel className="rounded-3xl">
+          {/* 왼쪽: 편집 폼 */}
+          <Panel className="rounded-3xl max-h-[calc(100vh-200px)] overflow-y-auto">
             <h2 className="text-lg font-semibold">{t("sectionsTitle")}</h2>
             <p className="mt-2 text-sm text-muted">
               {t("sectionsDescription")}
             </p>
-            <div className="mt-6 space-y-4">
-              {formSections.map((section) => (
-                <div
-                  key={section}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold">{section}</span>
-                    <span className="text-xs text-muted">Edit</span>
-                  </div>
-                  <div className="mt-3 h-2 w-full rounded-full bg-white/10" />
-                </div>
-              ))}
-            </div>
+            <EditorSectionTabs sectionNames={formSections} />
           </Panel>
 
-          <Panel variant="strong" className="rounded-3xl">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">{t("previewTitle")}</h2>
-              <div className="flex gap-2 text-xs text-muted">
-                <span className="rounded-full border border-white/15 px-3 py-1">
-                  {common("preview.desktop")}
-                </span>
-                <span className="rounded-full border border-white/10 px-3 py-1">
-                  {common("preview.mobile")}
-                </span>
-              </div>
-            </div>
-            <div className="mt-6 grid gap-4">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <h3 className="text-xl font-semibold">{t("previewName")}</h3>
-                <p className="mt-2 text-sm text-muted">
-                  {t("previewHeadline")}
-                </p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <div className="grid gap-2">
-                  <div className="h-3 w-1/2 rounded-full bg-white/15" />
-                  <div className="h-3 w-2/3 rounded-full bg-white/10" />
-                  <div className="h-3 w-1/3 rounded-full bg-white/10" />
-                </div>
-                <div className="mt-6 grid grid-cols-3 gap-3">
-                  <div className="h-20 rounded-xl bg-white/10" />
-                  <div className="h-20 rounded-xl bg-white/10" />
-                  <div className="h-20 rounded-xl bg-white/10" />
-                </div>
-              </div>
-            </div>
+          {/* 오른쪽: 실시간 미리보기 */}
+          <Panel
+            variant="strong"
+            className="rounded-3xl max-h-[calc(100vh-200px)] overflow-hidden flex flex-col"
+          >
+            <EditorPreviewWrapper />
           </Panel>
         </section>
       </Container>
