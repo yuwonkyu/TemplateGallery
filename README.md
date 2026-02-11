@@ -52,6 +52,27 @@ Template Gallery는 재사용 가능한 UI 컴포넌트와 안정적인 아키�
 - 로딩 상태 UI (loading.tsx)
 - 글로벌 스타일 설정 (globals.css)
 
+### Phase 6: 템플릿 갤러리 고도화
+
+- **템플릿 데이터 구조 설계**:
+  - JSON 기반 템플릿 카탈로그 (src/shared/constants/templates.json)
+  - 9개 템플릿 샘플 데이터 (다양한 역할별 레이아웃)
+  - i18n 키 기반 동적 번역 시스템
+- **갤러리 UI 구현** (TemplatesGallery.tsx):
+  - 무한 스크롤 (Intersection Observer)
+  - 실시간 검색 필터링
+  - 태그 기반 필터 (전체/개발자/아티스트/스튜디오)
+  - 정렬 옵션 (최신순/인기순/가나다순)
+  - 반응형 그리드 레이아웃 (3컬럼)
+- **사용자 경험 개선**:
+  - LocaleSwitcher 개선 (현재 경로/쿼리 유지하며 언어 전환)
+  - 모든 페이지 스켈레톤 로딩 UI 추가 (홈/에디터/템플릿)
+  - 텍스트 선택 방지 (입력 필드 제외)
+- **빌드 최적화**:
+  - Next.js 15 params Promise 타입 대응
+  - Vercel 프로덕션 빌드 타입 에러 수정
+  - next.config.mjs 전환 (파싱 경고 제거)
+
 ## 기술 스택
 
 - **Framework**: Next.js 15
@@ -83,6 +104,13 @@ pnpm build
 pnpm start
 \\\
 
+## 주요 커밋 히스토리 (2026-02-11)
+
+- `feat: add template gallery data and filters` - 템플릿 갤러리 데이터/필터링 구현
+- `fix: keep locale switch on current path` - 언어 전환 시 현재 경로 유지
+- `fix: resolve locale type error for Vercel build` - Vercel 빌드 타입 에러 수정
+- `chore: rename next.config.js to .mjs` - ES 모듈 파싱 경고 제거
+
 ## 프로젝트 구조 (FSD)
 
 \\\
@@ -107,7 +135,9 @@ pages/ # 페이지 컴포넌트
 
 ## 주요 기능
 
-- 다국어 지원 (가장 우선)
+- **다국어 지원** (한국어/영어, 경로 유지 언어 전환)
+- **템플릿 갤러리** (검색/필터/정렬/무한스크롤)
+- **스켈레톤 로딩** (모든 주요 페이지)
 - TypeScript 설정 (Path aliases 포함)
 - Tailwind CSS 4.1 스타일링
 - Zustand를 이용한 상태 관리
@@ -116,6 +146,7 @@ pages/ # 페이지 컴포넌트
 - 재사용 가능한 UI 컴포넌트
 - FSD 아키텍처 구조
 - 반응형 레이아웃
+- 텍스트 복사 방지 (입력 필드 제외)
 
 ## 현재 상태 (v0.1.0)
 
@@ -129,12 +160,16 @@ pages/ # 페이지 컴포넌트
 - 라우팅 구조 (App Router, 동적 라우팅)
 - 데이터 검증 스키마 (Zod)
 - 미들웨어 기반 locale 감지
+- **템플릿 갤러리 기본 기능** (필터/검색/정렬/무한스크롤)
+- **스켈레톤 로딩 UI** (모든 페이지)
+- **언어 전환 UX 개선** (경로 유지)
+- **프로덕션 빌드 안정화**
 
 ### 🔄 진행 중
 
-- 템플릿 갤러리 기능 개발
-- 에디터 페이지 기능 구현
-- 데이터 API 통합
+- 에디터 페이지 기능 구현 (폼 입력/실시간 미리보기)
+- 템플릿 상세 페이지 구현
+- 데이터 API 통합 (로컬 저장/불러오기)
 
 ### 📋 향후 예정
 
