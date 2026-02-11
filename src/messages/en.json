@@ -58,26 +58,74 @@
     "label": "Template Gallery",
     "title": "Pick a template that fits your story.",
     "description": "Every template is designed to export a clean HTML file you fully own. Start with the layout that matches your role, then customize inside the editor.",
-    "items": [
-      {
-        "id": "dev-pro",
-        "title": "Developer Pro",
-        "summary": "Minimal layout for projects, experience, and tech stack.",
-        "tags": ["Developer", "Clean", "One-page"]
-      },
-      {
-        "id": "artist-grid",
-        "title": "Artist Grid",
-        "summary": "Visual grid with hero statement and featured works.",
-        "tags": ["Artist", "Visual", "Gallery"]
-      },
-      {
-        "id": "studio-classic",
-        "title": "Studio Classic",
-        "summary": "Timeline + case studies for studios and small teams.",
-        "tags": ["Studio", "Case study", "Multi-section"]
+    "filters": {
+      "all": "All"
+    },
+    "search": {
+      "label": "Search",
+      "placeholder": "Search templates or tags"
+    },
+    "sort": {
+      "label": "Sort",
+      "options": {
+        "latest": "Latest",
+        "popular": "Most popular",
+        "title": "A-Z"
       }
-    ]
+    },
+    "empty": "No templates match your filters.",
+    "tags": {
+      "developer": "Developer",
+      "artist": "Artist",
+      "studio": "Studio",
+      "clean": "Clean",
+      "onePage": "One-page",
+      "visual": "Visual",
+      "gallery": "Gallery",
+      "caseStudy": "Case study",
+      "multiSection": "Multi-section",
+      "minimal": "Minimal",
+      "bold": "Bold",
+      "editorial": "Editorial"
+    },
+    "catalog": {
+      "devPro": {
+        "title": "Developer Pro",
+        "summary": "Minimal layout for projects, experience, and tech stack."
+      },
+      "artistGrid": {
+        "title": "Artist Grid",
+        "summary": "Visual grid with hero statement and featured works."
+      },
+      "studioClassic": {
+        "title": "Studio Classic",
+        "summary": "Timeline + case studies for studios and small teams."
+      },
+      "minimalZen": {
+        "title": "Minimal Zen",
+        "summary": "A calm, type-first layout that keeps the story tight."
+      },
+      "boldStatement": {
+        "title": "Bold Statement",
+        "summary": "High-contrast hero with oversized headings and punchy copy."
+      },
+      "productCasebook": {
+        "title": "Product Casebook",
+        "summary": "Case-study focused layout for product teams and studios."
+      },
+      "gridline": {
+        "title": "Gridline",
+        "summary": "Structured grid for work snapshots and role highlights."
+      },
+      "monoPortfolio": {
+        "title": "Mono Portfolio",
+        "summary": "Monochrome layout with sections tuned for developers."
+      },
+      "atelierPortfolio": {
+        "title": "Atelier Portfolio",
+        "summary": "Editorial layout that centers visuals and captions."
+      }
+    }
   },
   "editor": {
     "label": "Editor",

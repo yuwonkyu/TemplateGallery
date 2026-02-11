@@ -1,7 +1,10 @@
 import { getTranslations } from "next-intl/server";
 
 import type { Locale } from "@/i18n/config";
-import { Button, ButtonLink, Container, Panel, Pill } from "@components/common";
+import templatesData from "@/shared/constants/templates.json";
+import { Container, Pill } from "@components/common";
+
+import { TemplatesGallery } from "./TemplatesGallery";
 
 type PageProps = {
   params: Promise<{
@@ -11,9 +14,11 @@ type PageProps = {
 
 type TemplateItem = {
   id: string;
-  title: string;
-  summary: string;
-  tags: string[];
+  titleKey: string;
+  summaryKey: string;
+  tagKeys: string[];
+  updatedAt: string;
+  popularity: number;
 };
 
 const TemplatesPage = async ({ params }: PageProps) => {
@@ -21,10 +26,25 @@ const TemplatesPage = async ({ params }: PageProps) => {
   const t = await getTranslations({ locale, namespace: "templates" });
   const common = await getTranslations({ locale, namespace: "common" });
 
-  // 템플릿 목록 더미 데이터
-  const templates = t.raw("items") as TemplateItem[];
-  // 필터 UI용 리스트
-  const filters = common.raw("filters") as string[];
+  const templates = (templatesData as TemplateItem[]).map((template) => ({
+    id: template.id,
+    title: t(`catalog.${template.titleKey}`),
+    summary: t(`catalog.${template.summaryKey}`),
+    tags: template.tagKeys.map((tagKey) => t(`tags.${tagKey}`)),
+    updatedAt: template.updatedAt,
+    popularity: template.popularity,
+  }));
+
+  const filterAllLabel = t("filters.all");
+  const filterOptions = ["developer", "artist", "studio"].map((tagKey) =>
+    t(`tags.${tagKey}`),
+  );
+
+  const sortOptions = [
+    { value: "latest", label: t("sort.options.latest") },
+    { value: "popular", label: t("sort.options.popular") },
+    { value: "title", label: t("sort.options.title") },
+  ] as const;
 
   return (
     <main className="page-base">
@@ -35,47 +55,19 @@ const TemplatesPage = async ({ params }: PageProps) => {
           <p className="max-w-2xl text-sm text-muted">{t("description")}</p>
         </header>
 
-        <div className="flex flex-wrap gap-3">
-          {filters.map((filter) => (
-            <Button key={filter} variant="ghost" size="sm" type="button">
-              {filter}
-            </Button>
-          ))}
-        </div>
-
-        <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {templates.map((template) => (
-            <Panel
-              key={template.id}
-              className="transition hover:-translate-y-1"
-            >
-              <div className="flex h-36 items-center justify-center rounded-xl bg-white/5 text-sm text-muted">
-                {common("preview.label")}
-              </div>
-              <div className="mt-5 flex flex-col gap-3">
-                <h2 className="text-lg font-semibold">{template.title}</h2>
-                <p className="text-sm text-muted">{template.summary}</p>
-                <div className="flex flex-wrap gap-2">
-                  {template.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full bg-white/10 px-3 py-1 text-[11px] text-muted"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <ButtonLink
-                  href={`/${locale}/editor`}
-                  size="sm"
-                  className="mt-4 w-fit"
-                >
-                  {common("cta.openEditor")}
-                </ButtonLink>
-              </div>
-            </Panel>
-          ))}
-        </section>
+        <TemplatesGallery
+          locale={locale}
+          templates={templates}
+          filterAllLabel={filterAllLabel}
+          filterOptions={filterOptions}
+          sortOptions={sortOptions}
+          sortLabel={t("sort.label")}
+          searchLabel={t("search.label")}
+          searchPlaceholder={t("search.placeholder")}
+          emptyLabel={t("empty")}
+          previewLabel={common("preview.label")}
+          openEditorLabel={common("cta.openEditor")}
+        />
       </Container>
     </main>
   );

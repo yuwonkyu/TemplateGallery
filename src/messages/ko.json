@@ -58,26 +58,74 @@
     "label": "템플릿 갤러리",
     "title": "당신의 스토리에 맞는 템플릿을 선택하세요.",
     "description": "모든 템플릿은 사용자가 소유하는 HTML을 내보낼 수 있도록 설계되었습니다. 역할에 맞는 레이아웃을 고르고 에디터에서 커스터마이즈하세요.",
-    "items": [
-      {
-        "id": "dev-pro",
-        "title": "개발자 프로",
-        "summary": "프로젝트, 경력, 기술 스택에 집중한 미니멀 레이아웃.",
-        "tags": ["개발자", "미니멀", "원페이지"]
-      },
-      {
-        "id": "artist-grid",
-        "title": "아티스트 그리드",
-        "summary": "히어로 문장과 대표 작업을 강조하는 비주얼 그리드.",
-        "tags": ["아티스트", "비주얼", "갤러리"]
-      },
-      {
-        "id": "studio-classic",
-        "title": "스튜디오 클래식",
-        "summary": "타임라인과 케이스 스터디를 담는 팀용 구성.",
-        "tags": ["스튜디오", "케이스", "다중 섹션"]
+    "filters": {
+      "all": "전체"
+    },
+    "search": {
+      "label": "검색",
+      "placeholder": "템플릿 또는 태그 검색"
+    },
+    "sort": {
+      "label": "정렬",
+      "options": {
+        "latest": "최신순",
+        "popular": "인기순",
+        "title": "가나다순"
       }
-    ]
+    },
+    "empty": "조건에 맞는 템플릿이 없습니다.",
+    "tags": {
+      "developer": "개발자",
+      "artist": "아티스트",
+      "studio": "스튜디오",
+      "clean": "클린",
+      "onePage": "원페이지",
+      "visual": "비주얼",
+      "gallery": "갤러리",
+      "caseStudy": "케이스",
+      "multiSection": "다중 섹션",
+      "minimal": "미니멀",
+      "bold": "볼드",
+      "editorial": "에디토리얼"
+    },
+    "catalog": {
+      "devPro": {
+        "title": "개발자 프로",
+        "summary": "프로젝트, 경력, 기술 스택에 집중한 미니멀 레이아웃."
+      },
+      "artistGrid": {
+        "title": "아티스트 그리드",
+        "summary": "히어로 문장과 대표 작업을 강조하는 비주얼 그리드."
+      },
+      "studioClassic": {
+        "title": "스튜디오 클래식",
+        "summary": "타임라인과 케이스 스터디를 담는 팀용 구성."
+      },
+      "minimalZen": {
+        "title": "미니멀 젠",
+        "summary": "차분한 타이포 중심 레이아웃으로 스토리에 집중합니다."
+      },
+      "boldStatement": {
+        "title": "볼드 스테이트먼트",
+        "summary": "강한 대비와 큰 헤드라인으로 인상을 남깁니다."
+      },
+      "productCasebook": {
+        "title": "프로덕트 케이스북",
+        "summary": "제품 팀과 스튜디오를 위한 케이스 중심 레이아웃."
+      },
+      "gridline": {
+        "title": "그리드라인",
+        "summary": "작업 스냅샷과 역할을 구조적으로 보여줍니다."
+      },
+      "monoPortfolio": {
+        "title": "모노 포트폴리오",
+        "summary": "개발자 중심 섹션을 담은 모노톤 레이아웃."
+      },
+      "atelierPortfolio": {
+        "title": "아틀리에 포트폴리오",
+        "summary": "비주얼과 캡션을 강조하는 에디토리얼 구성."
+      }
+    }
   },
   "editor": {
     "label": "에디터",
