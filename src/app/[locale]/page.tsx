@@ -4,9 +4,9 @@ import type { Locale } from "@/i18n/config";
 import { ButtonLink, Container, Panel, Pill } from "@components/common";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     locale: Locale;
-  };
+  }>;
 };
 
 type Highlight = {
@@ -15,7 +15,7 @@ type Highlight = {
 };
 
 const Page = async ({ params }: PageProps) => {
-  const { locale } = params;
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "home" });
   const common = await getTranslations({ locale, namespace: "common" });
 

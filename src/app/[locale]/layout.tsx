@@ -9,15 +9,16 @@ import { Container, LocaleSwitcher } from "@components/common";
 
 type LocaleLayoutProps = {
   children: ReactNode;
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 };
 
 export const generateStaticParams = () => locales.map((locale) => ({ locale }));
 
 const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
-  const locale = params.locale as Locale;
+  const { locale: paramLocale } = await params;
+  const locale = paramLocale as Locale;
 
   if (!locales.includes(locale)) {
     notFound();
