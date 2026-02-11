@@ -23,7 +23,7 @@ type TemplatesGalleryProps = {
   templates: TemplateCard[];
   filterAllLabel: string;
   filterOptions: string[];
-  sortOptions: SortOption[];
+  sortOptions: ReadonlyArray<SortOption>;
   sortLabel: string;
   searchLabel: string;
   searchPlaceholder: string;
