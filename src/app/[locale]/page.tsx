@@ -44,9 +44,6 @@ const Page = async ({ params }: PageProps) => {
               <ButtonLink href={`/${locale}/templates`}>
                 {common("cta.explore")}
               </ButtonLink>
-              <ButtonLink href={`/${locale}/editor`} variant="outline">
-                {common("cta.openEditor")}
-              </ButtonLink>
             </div>
           </header>
 

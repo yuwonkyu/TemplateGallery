@@ -36,9 +36,7 @@ const TemplatesPage = async ({ params }: PageProps) => {
   }));
 
   const filterAllLabel = t("filters.all");
-  const filterOptions = ["developer", "artist", "studio"].map((tagKey) =>
-    t(`tags.${tagKey}`),
-  );
+  const filterOptions = [t("tags.developer")];
 
   const sortOptions = [
     { value: "latest", label: t("sort.options.latest") },

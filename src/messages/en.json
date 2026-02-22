@@ -90,8 +90,8 @@
     },
     "catalog": {
       "devPro": {
-        "title": "Developer Pro",
-        "summary": "Minimal layout for projects, experience, and tech stack."
+        "title": "Frontend Basics",
+        "summary": "A baseline frontend developer portfolio with intro, stack, and projects."
       },
       "artistGrid": {
         "title": "Artist Grid",

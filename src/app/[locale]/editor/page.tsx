@@ -1,14 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import type { Locale } from "@/i18n/config";
-import { Button, Container, Panel, Pill } from "@components/common";
-import {
-  ProfileForm,
-  HeroStatementForm,
-  FeaturedProjectsForm,
-  TimelineForm,
-  ContactForm,
-} from "@/shared/ui/editor";
+import { Container, Panel, Pill } from "@components/common";
 import { EditorSectionTabs } from "@/shared/ui/editor/EditorSectionTabs";
 import { EditorActions } from "@/shared/ui/editor/EditorActions";
 import { EditorPreviewWrapper } from "@/shared/ui/editor/EditorPreviewWrapper";
