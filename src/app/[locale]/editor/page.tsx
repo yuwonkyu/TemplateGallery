@@ -1,10 +1,21 @@
+import dynamic from "next/dynamic";
 import { getTranslations } from "next-intl/server";
 
 import type { Locale } from "@/i18n/config";
-import { Container, Panel, Pill } from "@components/common";
-import { EditorSectionTabs } from "@/shared/ui/editor/EditorSectionTabs";
+import { Container, Pill } from "@components/common";
 import { EditorActions } from "@/shared/ui/editor/EditorActions";
-import { EditorPreviewWrapper } from "@/shared/ui/editor/EditorPreviewWrapper";
+
+// 에디터 콘텐츠를 동적으로 로드하여 초기 번들 크기 감소
+const EditorContent = dynamic(
+  () => import("./EditorContent").then((mod) => mod.EditorContent),
+  {
+    loading: () => (
+      <div className="flex items-center justify-center h-96 text-white/50">
+        에디터 로딩 중...
+      </div>
+    ),
+  },
+);
 
 type PageProps = {
   params: Promise<{
@@ -37,24 +48,11 @@ const EditorPage = async ({ params }: PageProps) => {
           />
         </header>
 
-        <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          {/* 왼쪽: 편집 폼 */}
-          <Panel className="rounded-3xl max-h-[calc(100vh-200px)] overflow-y-auto">
-            <h2 className="text-lg font-semibold">{t("sectionsTitle")}</h2>
-            <p className="mt-2 text-sm text-muted">
-              {t("sectionsDescription")}
-            </p>
-            <EditorSectionTabs sectionNames={formSections} />
-          </Panel>
-
-          {/* 오른쪽: 실시간 미리보기 */}
-          <Panel
-            variant="strong"
-            className="rounded-3xl max-h-[calc(100vh-200px)] overflow-hidden flex flex-col"
-          >
-            <EditorPreviewWrapper />
-          </Panel>
-        </section>
+        <EditorContent
+          formSections={formSections}
+          sectionsTitle={t("sectionsTitle")}
+          sectionsDescription={t("sectionsDescription")}
+        />
       </Container>
     </main>
   );

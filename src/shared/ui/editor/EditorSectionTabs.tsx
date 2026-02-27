@@ -1,21 +1,42 @@
 "use client";
 
+import { Suspense, lazy } from "react";
 import { useEditorStore } from "@/shared/stores/editorStore";
-import {
-  ProfileForm,
-  HeroStatementForm,
-  FeaturedProjectsForm,
-  TimelineForm,
-  ContactForm,
-} from "@/shared/ui/editor";
 import type { SectionType } from "@/shared/types/editor";
 
-const sectionComponents: Record<SectionType, React.ReactNode> = {
-  profile: <ProfileForm />,
-  heroStatement: <HeroStatementForm />,
-  featuredProjects: <FeaturedProjectsForm />,
-  timeline: <TimelineForm />,
-  contact: <ContactForm />,
+// 동적 로드: 페이지 성능 개선
+const ProfileForm = lazy(() =>
+  import("./ProfileForm").then((mod) => ({
+    default: mod.ProfileForm,
+  })),
+);
+const HeroStatementForm = lazy(() =>
+  import("./HeroStatementForm").then((mod) => ({
+    default: mod.HeroStatementForm,
+  })),
+);
+const FeaturedProjectsForm = lazy(() =>
+  import("./FeaturedProjectsForm").then((mod) => ({
+    default: mod.FeaturedProjectsForm,
+  })),
+);
+const TimelineForm = lazy(() =>
+  import("./TimelineForm").then((mod) => ({
+    default: mod.TimelineForm,
+  })),
+);
+const ContactForm = lazy(() =>
+  import("./ContactForm").then((mod) => ({
+    default: mod.ContactForm,
+  })),
+);
+
+const sectionComponents: Record<SectionType, React.ComponentType> = {
+  profile: ProfileForm,
+  heroStatement: HeroStatementForm,
+  featuredProjects: FeaturedProjectsForm,
+  timeline: TimelineForm,
+  contact: ContactForm,
 };
 
 const sectionIds: SectionType[] = [
@@ -58,7 +79,14 @@ export const EditorSectionTabs = ({ sectionNames }: EditorSectionTabsProps) => {
       </div>
 
       {/* 탭 콘텐츠 */}
-      <div className="mt-6">{sectionComponents[selectedSection]}</div>
+      <div className="mt-6">
+        <Suspense fallback={<div className="text-white/50">로딩 중...</div>}>
+          {(() => {
+            const Component = sectionComponents[selectedSection];
+            return <Component />;
+          })()}
+        </Suspense>
+      </div>
     </div>
   );
 };
