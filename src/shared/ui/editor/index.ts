@@ -4,7 +4,6 @@ export { HeroStatementForm } from "./HeroStatementForm";
 export { FeaturedProjectsForm } from "./FeaturedProjectsForm";
 export { TimelineForm } from "./TimelineForm";
 export { ContactForm } from "./ContactForm";
-export { EditorPreview } from "./EditorPreview";
 export { EditorPreviewWrapper } from "./EditorPreviewWrapper";
 export { EditorSectionTabs } from "./EditorSectionTabs";
 export { EditorActions } from "./EditorActions";
