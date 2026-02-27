@@ -1,6 +1,18 @@
 import type { EditorData } from "@/shared/types/editor";
 
 /**
+ * URL 정규화 함수 - http:// 또는 https:// 자동 추가
+ */
+const normalizeUrl = (url: string): string => {
+  if (!url) return "";
+  const trimmed = url.trim();
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
+  }
+  return `https://${trimmed}`;
+};
+
+/**
  * 에디터 데이터를 HTML로 변환하는 함수
  * @param data - 에디터 데이터
  * @returns HTML 파일 내용
@@ -288,7 +300,17 @@ export const generatePortfolioHTML = (data: EditorData): string => {
             (project) => `<div class="project">
           <h3>${escapeHtml(project.title || "프로젝트명")}</h3>
           ${project.description ? `<p>${escapeHtml(project.description).replace(/\n/g, "<br>")}</p>` : ""}
-          ${project.link ? `<a href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">링크 보기</a>` : ""}
+          ${
+            project.links && project.links.length > 0
+              ? `<div class="project-links">${project.links
+                  .filter((link: any) => link.label?.trim() && link.url?.trim())
+                  .map(
+                    (link: any) =>
+                      `<a href="${escapeHtml(normalizeUrl(link.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`,
+                  )
+                  .join(" | ")}</div>`
+              : ""
+          }
         </div>`,
           )
           .join("")}
@@ -327,7 +349,13 @@ export const generatePortfolioHTML = (data: EditorData): string => {
       ${
         contact.links.length > 0
           ? `<div class="contact-links">
-        ${contact.links.map((link) => `<a href="${escapeHtml(link.url)}" class="contact-link" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`).join("")}
+        ${contact.links
+          .filter((link: any) => link.label?.trim() && link.url?.trim())
+          .map(
+            (link: any) =>
+              `<a href="${escapeHtml(normalizeUrl(link.url))}" class="contact-link" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`,
+          )
+          .join("")}
       </div>`
           : ""
       }
