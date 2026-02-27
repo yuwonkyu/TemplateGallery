@@ -27,7 +27,10 @@ export interface Project {
   title: string;
   description: string;
   tags: string[];
-  link?: string;
+  links: {
+    label: string;
+    url: string;
+  }[];
   image?: string;
 }
 

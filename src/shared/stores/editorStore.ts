@@ -134,6 +134,24 @@ export const useEditorStore = create<EditorStore>()(
     }),
     {
       name: "editor-storage", // 로컬스토리지 키
+      // 저장된 데이터 마이그레이션
+      migrate: (persistedState: any, _version: number) => {
+        if (persistedState.data?.featuredProjects) {
+          const projects = persistedState.data.featuredProjects.projects || [];
+          // 기존 'link' 필드를 'links' 배열로 변환
+          persistedState.data.featuredProjects.projects = projects.map(
+            (project: any) => {
+              const { link, ...rest } = project;
+              return {
+                ...rest,
+                links:
+                  project.links || (link ? [{ label: "링크", url: link }] : []),
+              };
+            },
+          );
+        }
+        return persistedState;
+      },
     },
   ),
 );
