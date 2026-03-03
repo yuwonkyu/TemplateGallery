@@ -1,15 +1,93 @@
 import { useEditorStore } from "@/shared/stores/editorStore";
+import { useRef } from "react";
 
 export const ProfileForm = () => {
   const { data, updateProfile } = useEditorStore();
   const profile = data.profile;
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (field: string, value: string) => {
     updateProfile({ [field]: value } as any);
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 이미지 파일만 허용
+    if (!file.type.startsWith("image/")) {
+      alert("이미지 파일만 업로드 가능합니다.");
+      return;
+    }
+
+    // 파일 크기 제한 (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("이미지 크기는 5MB 이하여야 합니다.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      updateProfile({ image: reader.result as string });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    updateProfile({ image: "" });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   return (
     <div className="space-y-5">
+      <div>
+        <label className="block text-sm font-semibold text-white/90 mb-2">
+          프로필 이미지
+        </label>
+        <div className="flex items-center gap-4">
+          <div className="relative h-24 w-24 rounded-full bg-white/10 border-2 border-white/20 overflow-hidden shrink-0">
+            {profile.image ? (
+              <img
+                src={profile.image}
+                alt="프로필 이미지"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-white/40 text-xs text-center px-2">
+                이미지
+              </div>
+            )}
+          </div>
+          <div className="flex-1 space-y-2">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+              id="profile-image-upload"
+            />
+            <label
+              htmlFor="profile-image-upload"
+              className="inline-block cursor-pointer rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm text-white hover:bg-white/10 transition"
+            >
+              이미지 선택
+            </label>
+            {profile.image && (
+              <button
+                onClick={handleRemoveImage}
+                className="ml-2 inline-block rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-400 hover:bg-red-500/20 transition"
+              >
+                제거
+              </button>
+            )}
+            <p className="text-xs text-white/40">JPG, PNG, GIF (최대 5MB)</p>
+          </div>
+        </div>
+      </div>
+
       <div>
         <label className="block text-sm font-semibold text-white/90">
           이름{" "}

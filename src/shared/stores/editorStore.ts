@@ -17,6 +17,7 @@ const defaultData: EditorData = {
     name: "",
     title: "",
     description: "",
+    image: "",
   },
   heroStatement: {
     headline: "",
