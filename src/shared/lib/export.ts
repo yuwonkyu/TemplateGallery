@@ -65,6 +65,13 @@ export const generatePortfolioHTML = (data: EditorData): string => {
       border-radius: 50%;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .profile-info h1 {
@@ -97,22 +104,27 @@ export const generatePortfolioHTML = (data: EditorData): string => {
     }
 
     .hero-statement {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 40px;
-      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      padding: 50px 40px;
+      border-radius: 12px;
       margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .hero-statement h2 {
       border-bottom: none;
-      font-size: 42px;
-      margin-bottom: 15px;
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: 700;
+      line-height: 1.3;
     }
 
     .hero-statement p {
-      font-size: 18px;
+      font-size: 17px;
       line-height: 1.8;
+      color: #666;
     }
 
     .projects {
@@ -163,6 +175,7 @@ export const generatePortfolioHTML = (data: EditorData): string => {
       position: relative;
       margin-bottom: 30px;
       padding-bottom: 30px;
+      padding-left: 20px;
       border-left: 2px solid #e0e0e0;
     }
 
@@ -270,7 +283,9 @@ export const generatePortfolioHTML = (data: EditorData): string => {
     <!-- Header -->
     <header>
       <div class="profile">
-        <div class="profile-avatar"></div>
+        <div class="profile-avatar">
+          ${profile.image ? `<img src="${profile.image}" alt="${escapeHtml(profile.name || "Profile")}" />` : ""}
+        </div>
         <div class="profile-info">
           <h1>${escapeHtml(profile.name || "Portfolio")}</h1>
           ${profile.title ? `<div class="title">${escapeHtml(profile.title)}</div>` : ""}
