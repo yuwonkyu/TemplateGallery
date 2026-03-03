@@ -19,11 +19,26 @@ const ProfileSection = memo(
   ({
     profile,
   }: {
-    profile: { name: string; title: string; description: string };
+    profile: {
+      name: string;
+      title: string;
+      description: string;
+      image?: string;
+    };
   }) => (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
       <div className="flex items-center gap-4">
-        <div className="h-16 w-16 rounded-full bg-linear-to-br from-white/20 to-white/5 shrink-0" />
+        <div className="h-16 w-16 rounded-full bg-linear-to-br from-white/20 to-white/5 shrink-0 overflow-hidden">
+          {profile.image ? (
+            <img
+              src={profile.image}
+              alt={profile.name || "프로필"}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="h-full w-full" />
+          )}
+        </div>
         <div className="flex-1">
           <h3 className="text-xl font-semibold text-white">
             {profile.name || "이름"}
@@ -49,14 +64,14 @@ const HeroSection = memo(
   }) => {
     if (!heroStatement.headline && !heroStatement.subheadline) return null;
     return (
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <div className="rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm p-8">
         {heroStatement.headline && (
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="text-3xl font-bold text-white leading-tight">
             {heroStatement.headline}
           </h2>
         )}
         {heroStatement.subheadline && (
-          <p className="mt-3 text-sm text-white/70 leading-relaxed">
+          <p className="mt-4 text-base text-white/80 leading-relaxed">
             {heroStatement.subheadline}
           </p>
         )}
@@ -125,7 +140,7 @@ const TimelineSection = memo(({ items }: { items: any[] }) => {
         {items.map((item) => (
           <div
             key={item.id}
-            className="pb-4 border-l-2 border-white/20 pl-4 last:pb-0"
+            className="pb-4 border-l-2 border-white/20 pl-5 last:pb-0"
           >
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1">
@@ -257,15 +272,15 @@ export const EditorPreviewWrapper = () => {
 
       {/* 미리보기 콘텐츠 */}
       <div
-        className={`flex-1 transition-all duration-300 overflow-hidden flex ${
+        className={`flex-1 transition-all duration-300 flex overflow-y-auto ${
           viewport === "mobile" ? "justify-center items-start pt-4" : ""
         }`}
       >
         <div
           className={`${
             viewport === "mobile"
-              ? "w-93.75 border border-white/10 rounded-lg bg-white/5 overflow-y-auto"
-              : "flex-1 overflow-y-auto"
+              ? "w-93.75 border border-white/10 rounded-lg bg-white/5 max-h-full"
+              : "flex-1"
           }`}
         >
           <div className={viewport === "mobile" ? "p-4" : ""}>
