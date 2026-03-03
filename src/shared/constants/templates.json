@@ -4,6 +4,7 @@
     "titleKey": "devPro.title",
     "summaryKey": "devPro.summary",
     "tagKeys": ["developer", "clean", "onePage"],
+    "previewImage": "/templates/FE_base.png",
     "updatedAt": "2026-01-28",
     "popularity": 98
   }

@@ -17,6 +17,7 @@ type TemplateItem = {
   titleKey: string;
   summaryKey: string;
   tagKeys: string[];
+  previewImage?: string;
   updatedAt: string;
   popularity: number;
 };
@@ -31,6 +32,7 @@ const TemplatesPage = async ({ params }: PageProps) => {
     title: t(`catalog.${template.titleKey}`),
     summary: t(`catalog.${template.summaryKey}`),
     tags: template.tagKeys.map((tagKey) => t(`tags.${tagKey}`)),
+    previewImage: template.previewImage,
     updatedAt: template.updatedAt,
     popularity: template.popularity,
   }));
