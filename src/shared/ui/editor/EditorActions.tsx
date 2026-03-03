@@ -11,12 +11,10 @@ import { Button } from "@/shared/ui/common";
 
 interface EditorActionsProps {
   resetLabel: string;
-  exportLabel: string;
 }
 
 export const EditorActions = ({
   resetLabel,
-  exportLabel,
 }: EditorActionsProps) => {
   const { data, resetData } = useEditorStore();
   const [isExporting, setIsExporting] = useState(false);

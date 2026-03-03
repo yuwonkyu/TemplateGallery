@@ -46,7 +46,6 @@ const EditorPage = async ({ params }: PageProps) => {
           </div>
           <EditorActions
             resetLabel={common("actions.reset")}
-            exportLabel={common("actions.export")}
           />
         </header>
 
