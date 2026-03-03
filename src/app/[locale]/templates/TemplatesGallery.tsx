@@ -9,6 +9,7 @@ type TemplateCard = {
   title: string;
   summary: string;
   tags: string[];
+  previewImage?: string;
   updatedAt: string;
   popularity: number;
 };
@@ -35,6 +36,44 @@ type TemplatesGalleryProps = {
 const INITIAL_PAGE_SIZE = 6;
 const PAGE_SIZE = 6;
 
+// 이미지 확대 모달 컴포넌트
+const ImageModal = ({
+  isOpen,
+  imageUrl,
+  onClose,
+}: {
+  isOpen: boolean;
+  imageUrl: string;
+  onClose: () => void;
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-h-[90vh] max-w-[90vw]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={imageUrl}
+          alt="Preview"
+          className="h-full w-full object-contain rounded-lg"
+        />
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition text-white"
+          aria-label="Close modal"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export const TemplatesGallery = ({
   locale,
   templates,
@@ -54,7 +93,32 @@ export const TemplatesGallery = ({
     sortOptions[0]?.value ?? "latest",
   );
   const [visibleCount, setVisibleCount] = useState(INITIAL_PAGE_SIZE);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  const handleImageClick = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedImage("");
+  };
+
+  // 모달이 열렸을 때 body 스크롤 방지
+  useEffect(() => {
+    if (modalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [modalOpen]);
 
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
@@ -146,6 +210,7 @@ export const TemplatesGallery = ({
           size="sm"
           type="button"
           onClick={() => setActiveFilter(filterAllLabel)}
+          className="cursor-pointer"
         >
           {filterAllLabel}
         </Button>
@@ -156,6 +221,7 @@ export const TemplatesGallery = ({
             size="sm"
             type="button"
             onClick={() => setActiveFilter(filter)}
+            className="cursor-pointer"
           >
             {filter}
           </Button>
@@ -179,7 +245,7 @@ export const TemplatesGallery = ({
             onChange={(event) =>
               setSortValue(event.target.value as SortOption["value"])
             }
-            className="bg-transparent text-xs text-white focus:outline-none"
+            className="cursor-pointer bg-gray-900 text-xs text-white focus:outline-none rounded px-2 py-1"
           >
             {sortOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -199,8 +265,39 @@ export const TemplatesGallery = ({
               key={template.id}
               className="transition hover:-translate-y-1"
             >
-              <div className="flex h-36 items-center justify-center rounded-xl bg-white/5 text-sm text-muted">
-                {previewLabel}
+              <div className="group relative flex h-36 items-center justify-center rounded-xl bg-white/5 overflow-hidden cursor-pointer">
+                {template.previewImage ? (
+                  <>
+                    <img
+                      src={template.previewImage}
+                      alt={template.title}
+                      className="h-full w-full object-cover"
+                    />
+                    <button
+                      onClick={() => handleImageClick(template.previewImage!)}
+                      className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      aria-label="Expand preview"
+                    >
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-black">
+                        <svg
+                          className="h-6 w-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </>
+                ) : (
+                  <span className="text-sm text-muted">{previewLabel}</span>
+                )}
               </div>
               <div className="mt-5 flex flex-col gap-3">
                 <h2 className="text-lg font-semibold">{template.title}</h2>
@@ -229,6 +326,12 @@ export const TemplatesGallery = ({
       )}
 
       {hasMore ? <div ref={sentinelRef} className="h-10" /> : null}
+
+      <ImageModal
+        isOpen={modalOpen}
+        imageUrl={selectedImage}
+        onClose={handleCloseModal}
+      />
     </section>
   );
 };
