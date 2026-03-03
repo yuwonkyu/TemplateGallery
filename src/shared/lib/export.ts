@@ -114,7 +114,7 @@ export const generatePortfolioHTML = (data: EditorData): string => {
 
     .hero-statement h2 {
       border-bottom: none;
-      font-size: 36px;
+      font-size: 28px;
       margin-bottom: 20px;
       color: #333;
       font-weight: 700;
@@ -122,7 +122,7 @@ export const generatePortfolioHTML = (data: EditorData): string => {
     }
 
     .hero-statement p {
-      font-size: 17px;
+      font-size: 15px;
       line-height: 1.8;
       color: #666;
     }
@@ -294,7 +294,7 @@ export const generatePortfolioHTML = (data: EditorData): string => {
       </div>
     </header>
 
-    <!-- Hero Statement -->
+    <!-- 소개 문구 -->
     ${
       heroStatement.headline || heroStatement.subheadline
         ? `<section class="hero-statement">
@@ -407,4 +407,68 @@ export const downloadFile = (content: string, filename: string) => {
   link.download = filename;
   link.click();
   URL.revokeObjectURL(link.href);
+};
+
+/**
+ * HTML을 PDF로 변환하여 다운로드하는 함수
+ */
+export const downloadPDF = async (data: EditorData) => {
+  try {
+    // 동적으로 html2pdf.js 로드
+    const html2pdf = (await import("html2pdf.js")).default;
+
+    // HTML 생성
+    const htmlContent = generatePortfolioHTML(data);
+
+    // 숨겨진 컨테이너에 HTML 삽입
+    const container = document.createElement("div");
+    container.style.position = "fixed";
+    container.style.left = "-10000px";
+    container.style.top = "0";
+    container.style.width = "210mm";
+    container.style.backgroundColor = "#f9f9f9";
+    container.innerHTML = htmlContent;
+    document.body.appendChild(container);
+
+    // 스타일이 적용되도록 잠시 대기
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // container 내부의 실제 body 내용만 가져오기
+    const htmlDoc = container.querySelector(".container") as HTMLElement;
+
+    if (!htmlDoc) {
+      throw new Error("콘텐츠를 찾을 수 없습니다.");
+    }
+
+    // PDF 옵션 설정
+    const opt = {
+      margin: [10, 10, 10, 10] as [number, number, number, number],
+      filename: `${data.profile.name || "portfolio"}-portfolio.pdf`,
+      image: { type: "jpeg" as const, quality: 0.95 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: "#f9f9f9",
+        windowWidth: 794, // A4 width in pixels at 96 DPI
+        windowHeight: 1123, // A4 height in pixels at 96 DPI
+      },
+      jsPDF: {
+        unit: "mm" as const,
+        format: "a4" as const,
+        orientation: "portrait" as const,
+      },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] as any },
+    };
+
+    // PDF 생성 및 다운로드
+    await html2pdf().set(opt).from(htmlDoc).save();
+
+    // 컨테이너 제거
+    document.body.removeChild(container);
+  } catch (error) {
+    console.error("PDF 생성 중 오류 발생:", error);
+    alert("PDF 생성에 실패했습니다. 다시 시도해주세요.");
+  }
 };
