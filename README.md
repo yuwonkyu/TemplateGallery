@@ -1,183 +1,113 @@
-﻿# Template Gallery
+# Portfolio Template Builder
 
-Next.js와 현대적인 웹 개발 스택으로 구성된 다국어 지원 템플릿 갤러리 프로젝트입니다.
-
-## 프로젝트 개요
-
-Template Gallery는 재사용 가능한 UI 컴포넌트와 안정적인 아키텍처를 제공하는 Next.js 기반 웹 애플리케이션입니다. 한국어(ko), 영어(en) 등 다국어를 지원하며, 사용자 친화적인 템플릿 편집 및 갤러리 기능을 제공합니다.
-
-## 개발 과정 (초기 버전 v0.1.0)
-
-### Phase 1: 프로젝트 초기화 및 기본 설정
-
-- **Next.js 15** 프레임워크 선택
-- **TypeScript** 타입 안정성 확보
-- **Tailwind CSS 4.1** 스타일링 도입
-- **pnpm** 패키지 매니저 설정
-- Path aliases 구성 (TypeScript 경로 최적화)
-
-### Phase 2: 국제화(i18n) 구현
-
-- **next-intl** 라이브러리 도입 (v4.8.2)
-- 다국어 메시지 파일 구성 (src/messages/en.json, ko.json)
-- 미들웨어를 통한 locale 자동 감지 (src/middleware.ts)
-- 언어 전환 UI 컴포넌트 구현 (LocaleSwitcher.tsx)
-
-### Phase 3: 아키텍처 설계
-
-- **FSD (Feature-Sliced Design)** 패턴 적용
-- 프로젝트 폴더 구조 정리 (src/ 중심 구조)
-- 공유 리소스(shared) 모듈화
-- UI 컴포넌트 조직화 (shared/ui/common/)
-
-### Phase 4: 상태 관리 및 유틸리티
-
-- **Zustand** v5.0.11 상태 관리 라이브러리 통합
-- **Zod** v3.25.76 데이터 검증 스키마 설정
-- 공통 UI 컴포넌트 구현:
-  - Button.tsx - 기본 버튼 컴포넌트
-  - ButtonLink.tsx - 링크 스타일 버튼
-  - Container.tsx - 레이아웃 컨테이너
-  - Panel.tsx - 패널 컴포넌트
-  - Pill.tsx - 태그/배지 컴포넌트
-  - LocaleSwitcher.tsx - 언어 전환 컴포넌트
-
-### Phase 5: 페이지 라우팅 구현
-
-- 동적 라우팅 구현:
-  - src/app/[locale]/layout.tsx - 다국어 레이아웃
-  - src/app/[locale]/page.tsx - 홈 페이지
-  - src/app/editor/page.tsx - 에디터
-  - src/app/templates/ - 템플릿 섹션
-- 로딩 상태 UI (loading.tsx)
-- 글로벌 스타일 설정 (globals.css)
-
-### Phase 6: 템플릿 갤러리 고도화
-
-- **템플릿 데이터 구조 설계**:
-  - JSON 기반 템플릿 카탈로그 (src/shared/constants/templates.json)
-  - 9개 템플릿 샘플 데이터 (다양한 역할별 레이아웃)
-  - i18n 키 기반 동적 번역 시스템
-- **갤러리 UI 구현** (TemplatesGallery.tsx):
-  - 무한 스크롤 (Intersection Observer)
-  - 실시간 검색 필터링
-  - 태그 기반 필터 (전체/개발자/아티스트/스튜디오)
-  - 정렬 옵션 (최신순/인기순/가나다순)
-  - 반응형 그리드 레이아웃 (3컬럼)
-- **사용자 경험 개선**:
-  - LocaleSwitcher 개선 (현재 경로/쿼리 유지하며 언어 전환)
-  - 모든 페이지 스켈레톤 로딩 UI 추가 (홈/에디터/템플릿)
-  - 텍스트 선택 방지 (입력 필드 제외)
-- **빌드 최적화**:
-  - Next.js 15 params Promise 타입 대응
-  - Vercel 프로덕션 빌드 타입 에러 수정
-  - next.config.mjs 전환 (파싱 경고 제거)
-
-## 기술 스택
-
-- **Framework**: Next.js 15
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4.1
-- **State Management**: Zustand
-- **Data Validation**: Zod
-- **Package Manager**: pnpm
-- **Architecture**: FSD (Feature-Sliced Design)
-
-## 설치
-
-\\\ash
-pnpm install
-\\\
-
-## 개발 서버 실행
-
-\\\ash
-pnpm dev
-\\\
-
-[http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
-
-## 빌드
-
-\\\ash
-pnpm build
-pnpm start
-\\\
-
-## 주요 커밋 히스토리 (2026-02-11)
-
-- `feat: add template gallery data and filters` - 템플릿 갤러리 데이터/필터링 구현
-- `fix: keep locale switch on current path` - 언어 전환 시 현재 경로 유지
-- `fix: resolve locale type error for Vercel build` - Vercel 빌드 타입 에러 수정
-- `chore: rename next.config.js to .mjs` - ES 모듈 파싱 경고 제거
-
-## 프로젝트 구조 (FSD)
-
-\\\
-src/
-app/ # Next.js App Router
-shared/ # 공유 리소스
-ui/ # UI 컴포넌트
-common/ # 공통 컴포넌트 (Button, Card 등)
-layouts/ # 레이아웃 컴포넌트
-lib/ # 유틸리티 함수
-hooks/ # React Hooks (useForm, useClickOutside 등)
-utils/ # 헬퍼 함수
-helpers/ # 비즈니스 로직 헬퍼
-stores/ # Zustand 상태 관리
-types/ # TypeScript 타입 및 Zod 스키마
-constants/ # 상수 정의
-config/ # 설정 파일
-features/ # 기능 모듈
-entities/ # 데이터 엔티티
-pages/ # 페이지 컴포넌트
-\\\
+코드 없이 포트폴리오를 만들고, 내가 소유하는 HTML/PDF로 내보낼 수 있는 노코드 에디터입니다.
 
 ## 주요 기능
 
-- **다국어 지원** (한국어/영어, 경로 유지 언어 전환)
-- **템플릿 갤러리** (검색/필터/정렬/무한스크롤)
-- **스켈레톤 로딩** (모든 주요 페이지)
-- TypeScript 설정 (Path aliases 포함)
-- Tailwind CSS 4.1 스타일링
-- Zustand를 이용한 상태 관리
-- Zod를 이용한 데이터 검증
-- React Hooks 모음
-- 재사용 가능한 UI 컴포넌트
-- FSD 아키텍처 구조
-- 반응형 레이아웃
-- 텍스트 복사 방지 (입력 필드 제외)
+### 📝 에디터
+- **프로필 섹션**: 이름, 직책, 소개, 프로필 이미지 업로드
+- **소개 문구**: 대표 문구 및 부제목 작성
+- **대표 프로젝트**: 프로젝트 설명 및 링크 추가
+- **타임라인**: 경력 및 경험 기록
+- **연락처**: 이메일, 전화번호, 소셜 링크
 
-## 현재 상태 (v0.1.0)
+### 👀 실시간 미리보기
+- 데스크탑/모바일 뷰 전환
+- 작성 내용 즉시 반영
+- 모바일 뷰 스크롤 지원
 
-### ✅ 완료된 기능
+### 💾 자동 저장
+- 브라우저 로컬 스토리지에 자동 저장
+- 페이지 새로고침 시에도 데이터 유지
 
-- 다국어 지원 시스템 (한국어, 영어)
-- 기본 UI 컴포넌트 세트 구현
-- 반응형 레이아웃 설계
-- TypeScript 타입 안전성 구성
-- 상태 관리 인프라 (Zustand)
-- 라우팅 구조 (App Router, 동적 라우팅)
-- 데이터 검증 스키마 (Zod)
-- 미들웨어 기반 locale 감지
-- **템플릿 갤러리 기본 기능** (필터/검색/정렬/무한스크롤)
-- **스켈레톤 로딩 UI** (모든 페이지)
-- **언어 전환 UX 개선** (경로 유지)
-- **프로덕션 빌드 안정화**
+### 📤 내보내기
+- **HTML 내보내기**: 독립적인 HTML 파일 생성
+- **PDF 내보내기**: 스타일이 적용된 PDF 생성
+- 완전한 소유권 보장 (클라우드 종속 없음)
 
-### 🔄 진행 중
+### 🎨 템플릿 갤러리
+- 검색 기능 (템플릿명, 태그)
+- 필터링 (전체, 개발자 등)
+- 정렬 (최신순, 인기순, 가나다순)
+- 무한 스크롤
+- 미리보기 이미지 확대 기능
 
-- 에디터 페이지 기능 구현 (폼 입력/실시간 미리보기)
-- 템플릿 상세 페이지 구현
-- 데이터 API 통합 (로컬 저장/불러오기)
+### 🌍 다국어 지원
+- 한국어, 영어 지원
+- 언어 전환 시 현재 경로 유지
 
-### 📋 향후 예정
+## 기술 스택
 
-- 템플릿 저장 및 로드 기능
-- 사용자 계정 관리
-- 템플릿 공유 기능
-- 분석 및 로깅
-- E2E 테스트 구성
+- **Framework**: Next.js 15.5.12
+- **Language**: TypeScript 5.9.3
+- **Styling**: Tailwind CSS 4.1.18
+- **State Management**: Zustand 5.0.11
+- **Internationalization**: next-intl 4.8.2
+- **PDF Generation**: html2pdf.js 0.14.0
+- **Data Validation**: Zod 3.25.76
+- **Package Manager**: pnpm
+
+## 시작하기
+
+### 설치
+
+```bash
+pnpm install
+```
+
+### 개발 서버 실행
+
+```bash
+pnpm dev
+```
+
+[http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
+
+### 빌드
+
+```bash
+pnpm build
+pnpm start
+```
+
+## 프로젝트 구조
+
+```
+src/
+├── app/                          # Next.js App Router
+│   ├── [locale]/                 # 다국어 라우팅
+│   │   ├── page.tsx              # 홈 페이지
+│   │   ├── editor/               # 에디터 페이지
+│   │   └── templates/            # 템플릿 갤러리
+│   └── globals.css               # 글로벌 스타일
+├── i18n/                         # 국제화 설정
+├── messages/                     # 번역 파일 (ko.json, en.json)
+└── shared/                       # 공유 리소스
+    ├── constants/                # 템플릿 데이터 등
+    ├── lib/                      # 유틸리티 (export 등)
+    ├── stores/                   # Zustand 스토어
+    ├── types/                    # TypeScript 타입
+    └── ui/                       # UI 컴포넌트
+        ├── common/               # 공통 컴포넌트
+        └── editor/               # 에디터 컴포넌트
+```
+
+## 에디터 사용법
+
+1. **템플릿 선택**: 갤러리에서 원하는 템플릿 선택
+2. **정보 입력**: 왼쪽 패널에서 섹션별로 정보 작성
+3. **미리보기**: 오른쪽에서 실시간으로 결과 확인
+4. **내보내기**: HTML 또는 PDF로 다운로드
+
+## 주요 개발 히스토리
+
+- `feat: 프로필 이미지 업로드 기능 추가`
+- `feat: 미리보기 영역 개선`
+- `feat: HTML 내보내기 개선`
+- `feat: 템플릿 미리보기 이미지 추가`
+- `feat: 템플릿 갤러리 상호작용성 개선`
+- `feat: PDF 내보내기 기능 추가`
+- `refactor: 섹션 네이밍 변경 "히어로 문장" → "소개 문구"`
 
 ## 라이센스
 
