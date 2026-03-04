@@ -38,7 +38,21 @@ const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
         >
           Portfolio Template Builder
         </Link>
-        <LocaleSwitcher locale={locale} />
+        <nav className="flex items-center gap-6">
+          <Link
+            href={`/${locale}/templates`}
+            className="text-sm text-muted transition-colors hover:text-white"
+          >
+            {messages.templates.label}
+          </Link>
+          <Link
+            href={`/${locale}/guide`}
+            className="text-sm text-muted transition-colors hover:text-white"
+          >
+            {messages.guide.label}
+          </Link>
+          <LocaleSwitcher locale={locale} />
+        </nav>
       </Container>
       {children}
     </NextIntlClientProvider>

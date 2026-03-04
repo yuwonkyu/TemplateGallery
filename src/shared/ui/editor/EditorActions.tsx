@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useEditorStore } from "@/shared/stores/editorStore";
 import {
   generatePortfolioHTML,
@@ -11,10 +12,12 @@ import { Button } from "@/shared/ui/common";
 
 interface EditorActionsProps {
   resetLabel: string;
+  locale?: string;
 }
 
 export const EditorActions = ({
   resetLabel,
+  locale = "ko",
 }: EditorActionsProps) => {
   const { data, resetData } = useEditorStore();
   const [isExporting, setIsExporting] = useState(false);
@@ -41,16 +44,24 @@ export const EditorActions = ({
   };
 
   return (
-    <div className="flex gap-3">
-      <Button variant="outline" size="sm" onClick={handleReset}>
-        {resetLabel}
-      </Button>
-      <Button size="sm" onClick={handleExportHTML} disabled={isExporting}>
-        HTML 내보내기
-      </Button>
-      <Button size="sm" onClick={handleExportPDF} disabled={isExporting}>
-        {isExporting ? "PDF 생성 중..." : "PDF 내보내기"}
-      </Button>
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <Link
+        href={`/${locale}/guide`}
+        className="text-sm text-muted transition-colors hover:text-white"
+      >
+        📖 배포 가이드
+      </Link>
+      <div className="flex gap-3">
+        <Button variant="outline" size="sm" onClick={handleReset}>
+          {resetLabel}
+        </Button>
+        <Button size="sm" onClick={handleExportHTML} disabled={isExporting}>
+          HTML 내보내기
+        </Button>
+        <Button size="sm" onClick={handleExportPDF} disabled={isExporting}>
+          {isExporting ? "PDF 생성 중..." : "PDF 내보내기"}
+        </Button>
+      </div>
     </div>
   );
 };

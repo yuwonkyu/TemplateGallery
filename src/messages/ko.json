@@ -32,7 +32,7 @@
       },
       {
         "title": "내가 소유하는 HTML",
-        "description": "GitHub Pages, Vercel, Netlify 가이드를 포함한 index.html + README를 내려받습니다."
+        "description": "index.html을 내려받고, 가이드 페이지에서 GitHub Pages, Vercel, Netlify 배포 방법을 확인하세요."
       }
     ],
     "how": {
@@ -137,5 +137,63 @@
     "previewTitle": "실시간 미리보기",
     "previewName": "이름",
     "previewHeadline": "무엇을 만들고 어떤 사람을 돕는지 짧게 소개하세요."
+  },
+  "guide": {
+    "label": "배포 가이드",
+    "title": "내보낸 HTML을 배포하는 방법",
+    "description": "GitHub Pages, Vercel, Netlify에서 포트폴리오를 무료로 배포할 수 있습니다. 플랫폼별 단계를 따라 몇 분 안에 공개하세요.",
+    "intro": {
+      "title": "시작하기 전에",
+      "description": "에디터에서 내보낸 HTML 파일은 완전히 독립적입니다. 어디서든 호스팅할 수 있으며, 아래 가이드는 가장 인기 있는 무료 배포 플랫폼을 다룹니다."
+    },
+    "platforms": {
+      "github": {
+        "title": "GitHub Pages",
+        "description": "GitHub 저장소에서 직접 정적 사이트를 호스팅합니다.",
+        "steps": [
+          "GitHub에 새 저장소를 만듭니다 (예: my-portfolio).",
+          "내보낸 index.html 파일을 저장소 루트에 커밋합니다.",
+          "Settings > Pages로 이동하여 'Deploy from a branch'를 선택합니다.",
+          "main 브랜치와 / (root) 폴더를 선택한 후 Save를 클릭합니다.",
+          "몇 분 후 https://[username].github.io/[repository] 에서 확인할 수 있습니다."
+        ]
+      },
+      "vercel": {
+        "title": "Vercel",
+        "description": "빠른 배포와 자동 HTTPS를 제공하는 플랫폼입니다.",
+        "steps": [
+          "vercel.com에서 계정을 만듭니다.",
+          "New Project를 클릭하고 GitHub 저장소를 연결하거나 파일을 직접 업로드합니다.",
+          "Framework Preset은 'Other'로 두고 Deploy를 클릭합니다.",
+          "배포가 완료되면 자동으로 HTTPS URL이 생성됩니다.",
+          "커스텀 도메인을 연결하려면 Project Settings > Domains로 이동합니다."
+        ]
+      },
+      "netlify": {
+        "title": "Netlify",
+        "description": "드래그 앤 드롭으로 즉시 배포할 수 있는 플랫폼입니다.",
+        "steps": [
+          "netlify.com에서 계정을 만듭니다.",
+          "Sites 페이지에서 'Add new site' > 'Deploy manually'를 선택합니다.",
+          "내보낸 HTML 파일을 드래그 앤 드롭합니다.",
+          "배포가 자동으로 시작되며 몇 초 후 URL이 생성됩니다.",
+          "Site settings에서 사이트 이름을 변경하거나 커스텀 도메인을 추가할 수 있습니다."
+        ]
+      }
+    },
+    "tips": {
+      "title": "배포 팁",
+      "items": [
+        "모든 플랫폼은 무료 플랜에서 HTTPS를 자동 제공합니다.",
+        "커스텀 도메인을 연결하려면 DNS 설정이 필요합니다 (플랫폼별 가이드 참고).",
+        "HTML을 수정한 후에는 파일을 다시 커밋하거나 업로드하면 자동으로 재배포됩니다.",
+        "GitHub Pages는 저장소가 public이어야 무료로 사용할 수 있습니다."
+      ]
+    },
+    "cta": {
+      "title": "준비되셨나요?",
+      "description": "에디터로 돌아가 포트폴리오를 완성하고 HTML을 내보내세요.",
+      "button": "에디터로 돌아가기"
+    }
   }
 }

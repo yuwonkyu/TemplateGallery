@@ -32,7 +32,7 @@
       },
       {
         "title": "Export HTML you own",
-        "description": "Download a ready-to-deploy index.html + README guide for GitHub Pages, Vercel, or Netlify."
+        "description": "Download your index.html, then follow the in-app guide page for GitHub Pages, Vercel, and Netlify deployment."
       }
     ],
     "how": {
@@ -143,5 +143,63 @@
     "previewTitle": "Live Preview",
     "previewName": "Your Name",
     "previewHeadline": "Short headline about what you build and who you help."
+  },
+  "guide": {
+    "label": "Deployment Guide",
+    "title": "How to deploy your exported HTML",
+    "description": "Deploy your portfolio for free on GitHub Pages, Vercel, or Netlify. Follow the platform-specific steps to go live in minutes.",
+    "intro": {
+      "title": "Before you start",
+      "description": "The HTML file you export from the editor is fully self-contained. You can host it anywhere. The guides below cover the most popular free deployment platforms."
+    },
+    "platforms": {
+      "github": {
+        "title": "GitHub Pages",
+        "description": "Host static sites directly from your GitHub repository.",
+        "steps": [
+          "Create a new GitHub repository (e.g., my-portfolio).",
+          "Commit the exported index.html file to the repository root.",
+          "Go to Settings > Pages and select 'Deploy from a branch'.",
+          "Choose the main branch and / (root) folder, then click Save.",
+          "Your site will be live at https://[username].github.io/[repository] in a few minutes."
+        ]
+      },
+      "vercel": {
+        "title": "Vercel",
+        "description": "Platform with fast deployment and automatic HTTPS.",
+        "steps": [
+          "Create an account at vercel.com.",
+          "Click New Project and connect a GitHub repo or upload files directly.",
+          "Leave Framework Preset as 'Other' and click Deploy.",
+          "Once deployed, you'll get an automatic HTTPS URL.",
+          "To add a custom domain, go to Project Settings > Domains."
+        ]
+      },
+      "netlify": {
+        "title": "Netlify",
+        "description": "Deploy instantly with drag-and-drop.",
+        "steps": [
+          "Create an account at netlify.com.",
+          "On the Sites page, select 'Add new site' > 'Deploy manually'.",
+          "Drag and drop your exported HTML file.",
+          "Deployment starts automatically and you'll get a URL in seconds.",
+          "In Site settings, you can change the site name or add a custom domain."
+        ]
+      }
+    },
+    "tips": {
+      "title": "Deployment tips",
+      "items": [
+        "All platforms provide automatic HTTPS on free plans.",
+        "To connect a custom domain, you'll need to configure DNS settings (see platform-specific guides).",
+        "After editing your HTML, simply commit or re-upload the file to redeploy automatically.",
+        "GitHub Pages requires your repository to be public for free hosting."
+      ]
+    },
+    "cta": {
+      "title": "Ready to go?",
+      "description": "Head back to the editor to complete your portfolio and export the HTML.",
+      "button": "Back to Editor"
+    }
   }
 }
