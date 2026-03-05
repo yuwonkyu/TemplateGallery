@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-import type { Locale } from "@/i18n/config";
+import { locales, type Locale } from "@/i18n/config";
 import templatesData from "@/shared/constants/templates.json";
 import { Container, Pill } from "@components/common";
 
@@ -21,6 +21,9 @@ type TemplateItem = {
   updatedAt: string;
   popularity: number;
 };
+
+export const generateStaticParams = () => 
+  locales.map((locale) => ({ locale }));
 
 const TemplatesPage = async ({ params }: PageProps) => {
   const { locale } = await params;

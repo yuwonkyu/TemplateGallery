@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-import type { Locale } from "@/i18n/config";
+import { locales, type Locale } from "@/i18n/config";
 import { ButtonLink, Container, Panel } from "@components/common";
 
 type PageProps = {
@@ -8,6 +8,9 @@ type PageProps = {
     locale: Locale;
   }>;
 };
+
+export const generateStaticParams = () => 
+  locales.map((locale) => ({ locale }));
 
 const Page = async ({ params }: PageProps) => {
   const { locale } = await params;

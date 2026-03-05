@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 
 import { Button, ButtonLink, Panel } from "@components/common";
 
@@ -57,10 +58,13 @@ const ImageModal = ({
         className="relative max-h-[90vh] max-w-[90vw]"
         onClick={(e) => e.stopPropagation()}
       >
-        <img
+        <Image
           src={imageUrl}
           alt="Preview"
+          width={1200}
+          height={800}
           className="h-full w-full object-contain rounded-lg"
+          quality={90}
         />
         <button
           onClick={onClose}
@@ -268,10 +272,13 @@ export const TemplatesGallery = ({
               <div className="group relative flex h-36 items-center justify-center rounded-xl bg-white/5 overflow-hidden cursor-pointer">
                 {template.previewImage ? (
                   <>
-                    <img
+                    <Image
                       src={template.previewImage}
                       alt={template.title}
+                      width={400}
+                      height={144}
                       className="h-full w-full object-cover"
+                      loading="lazy"
                     />
                     <button
                       onClick={() => handleImageClick(template.previewImage!)}
