@@ -67,7 +67,7 @@ const ImageModal = ({
         />
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition text-white"
+          className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition text-white cursor-pointer"
           aria-label="Close modal"
         >
           ✕

@@ -121,7 +121,7 @@ export const TimelineForm = () => {
             <div className="flex justify-end pt-2 border-t border-white/10">
               <button
                 onClick={() => handleDeleteItem(item.id)}
-                className="text-xs text-red-400 hover:text-red-300 transition"
+                className="text-xs text-red-400 hover:text-red-300 transition cursor-pointer"
               >
                 삭제
               </button>

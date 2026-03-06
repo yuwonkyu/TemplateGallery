@@ -172,7 +172,7 @@ export const FeaturedProjectsForm = () => {
                     />
                     <button
                       onClick={() => handleDeleteLink(project.id, linkIndex)}
-                      className="text-xs text-red-400 hover:text-red-300 transition px-1.5"
+                      className="text-xs text-red-400 hover:text-red-300 transition px-1.5 cursor-pointer"
                     >
                       ✕
                     </button>
@@ -181,7 +181,7 @@ export const FeaturedProjectsForm = () => {
               )}
               <button
                 onClick={() => handleAddLink(project.id)}
-                className="w-full text-xs text-blue-400 hover:text-blue-300 transition py-1 rounded-lg border border-blue-400/30 hover:bg-blue-400/10"
+                className="w-full text-xs text-blue-400 hover:text-blue-300 transition py-1 rounded-lg border border-blue-400/30 hover:bg-blue-400/10 cursor-pointer"
               >
                 + 링크 추가
               </button>
@@ -190,7 +190,7 @@ export const FeaturedProjectsForm = () => {
             <div className="flex justify-end pt-2 border-t border-white/10">
               <button
                 onClick={() => handleDeleteProject(project.id)}
-                className="text-xs text-red-400 hover:text-red-300 transition"
+                className="text-xs text-red-400 hover:text-red-300 transition cursor-pointer"
               >
                 프로젝트 삭제
               </button>

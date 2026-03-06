@@ -78,7 +78,7 @@ export const ProfileForm = () => {
             {profile.image && (
               <button
                 onClick={handleRemoveImage}
-                className="ml-2 inline-block rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-400 hover:bg-red-500/20 transition"
+                className="ml-2 inline-block rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-400 hover:bg-red-500/20 transition cursor-pointer"
               >
                 제거
               </button>

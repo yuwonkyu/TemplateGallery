@@ -119,7 +119,7 @@ export const ContactForm = () => {
                 </div>
                 <button
                   onClick={() => handleDeleteLink(index)}
-                  className="text-xs text-red-400 hover:text-red-300 transition px-2 py-2"
+                  className="text-xs text-red-400 hover:text-red-300 transition px-2 py-2 cursor-pointer"
                 >
                   ✕
                 </button>
