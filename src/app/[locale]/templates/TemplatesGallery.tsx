@@ -55,16 +55,15 @@ const ImageModal = ({
       onClick={onClose}
     >
       <div
-        className="relative max-h-[90vh] max-w-[90vw]"
+        className="relative h-[90vh] w-[90vw]"
         onClick={(e) => e.stopPropagation()}
       >
         <Image
           src={imageUrl}
           alt="Preview"
-          width={1200}
-          height={800}
-          className="h-full w-full object-contain rounded-lg"
-          quality={90}
+          fill
+          className="object-contain rounded-lg"
+          quality={95}
         />
         <button
           onClick={onClose}
