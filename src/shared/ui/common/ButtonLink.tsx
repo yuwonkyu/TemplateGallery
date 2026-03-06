@@ -35,7 +35,7 @@ export const ButtonLink = ({
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-2 rounded-full font-semibold transition",
+        "inline-flex items-center gap-2 rounded-full font-semibold transition cursor-pointer",
         variants[variant],
         sizes[size],
         className,

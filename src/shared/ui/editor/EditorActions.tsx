@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useEditorStore } from "@/shared/stores/editorStore";
 import {
   generatePortfolioHTML,
@@ -45,12 +44,6 @@ export const EditorActions = ({
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-      <Link
-        href={`/${locale}/guide`}
-        className="text-sm text-muted transition-colors hover:text-white"
-      >
-        📖 배포 가이드
-      </Link>
       <div className="flex gap-3">
         <Button variant="outline" size="sm" onClick={handleReset}>
           {resetLabel}

@@ -66,7 +66,7 @@ export const EditorSectionTabs = ({ sectionNames }: EditorSectionTabsProps) => {
             <button
               key={sectionId}
               onClick={() => setSelectedSection(sectionId)}
-              className={`text-sm font-medium px-3 py-2 rounded-lg transition ${
+              className={`text-sm font-medium px-3 py-2 rounded-lg transition cursor-pointer ${
                 isActive
                   ? "bg-white/15 text-white border border-white/30"
                   : "text-white/60 hover:text-white/80"

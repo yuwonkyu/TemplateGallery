@@ -31,7 +31,7 @@ export const Button = ({
   return (
     <button
       className={cn(
-        "rounded-full font-semibold transition",
+        "rounded-full font-semibold transition cursor-pointer",
         variants[variant],
         sizes[size],
         className,
