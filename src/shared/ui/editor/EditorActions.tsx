@@ -11,13 +11,9 @@ import { Button } from "@/shared/ui/common";
 
 interface EditorActionsProps {
   resetLabel: string;
-  locale?: string;
 }
 
-export const EditorActions = ({
-  resetLabel,
-  locale = "ko",
-}: EditorActionsProps) => {
+export const EditorActions = ({ resetLabel }: EditorActionsProps) => {
   const { data, resetData } = useEditorStore();
   const [isExporting, setIsExporting] = useState(false);
 

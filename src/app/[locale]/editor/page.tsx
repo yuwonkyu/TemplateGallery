@@ -44,7 +44,7 @@ const EditorPage = async ({ params }: PageProps) => {
               {t("description")}
             </p>
           </div>
-          <EditorActions resetLabel={common("actions.reset")} locale={locale} />
+          <EditorActions resetLabel={common("actions.reset")} />
         </header>
 
         <EditorContent
