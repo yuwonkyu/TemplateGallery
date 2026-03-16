@@ -70,7 +70,13 @@ const ImageModal = ({
           className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition text-white cursor-pointer"
           aria-label="Close modal"
         >
-          ✕
+          <Image
+            src="/icon/cancel.svg"
+            alt=""
+            width={18}
+            height={18}
+            aria-hidden="true"
+          />
         </button>
       </div>
     </div>
@@ -285,19 +291,14 @@ export const TemplatesGallery = ({
                       aria-label="Expand preview"
                     >
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-black">
-                        <svg
+                        <Image
+                          src="/icon/magnifier.svg"
+                          alt=""
+                          width={16}
+                          height={16}
                           className="h-6 w-6"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7"
-                          />
-                        </svg>
+                          aria-hidden="true"
+                        />
                       </div>
                     </button>
                   </>
