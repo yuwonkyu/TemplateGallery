@@ -7,6 +7,8 @@ import type {
   ProfileSection,
   HeroStatementSection,
   FeaturedProjectsSection,
+  GallerySection,
+  AboutSection,
   TimelineSection,
   ContactSection,
 } from "@/shared/types/editor";
@@ -26,6 +28,14 @@ const defaultData: EditorData = {
   featuredProjects: {
     projects: [],
   },
+  gallery: {
+    items: [],
+  },
+  about: {
+    style: "",
+    interests: "",
+    bio: "",
+  },
   timeline: {
     items: [],
   },
@@ -42,6 +52,8 @@ interface EditorStore extends EditorState {
   updateProfile: (profile: Partial<ProfileSection>) => void;
   updateHeroStatement: (hero: Partial<HeroStatementSection>) => void;
   updateFeaturedProjects: (projects: Partial<FeaturedProjectsSection>) => void;
+  updateGallery: (gallery: Partial<GallerySection>) => void;
+  updateAbout: (about: Partial<AboutSection>) => void;
   updateTimeline: (timeline: Partial<TimelineSection>) => void;
   updateContact: (contact: Partial<ContactSection>) => void;
 
@@ -98,6 +110,27 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
+      updateGallery: (gallery) =>
+        set((state) => ({
+          data: {
+            ...state.data,
+            gallery: {
+              ...state.data.gallery,
+              ...gallery,
+            },
+          },
+          lastSaved: Date.now(),
+        })),
+
+      updateAbout: (about) =>
+        set((state) => ({
+          data: {
+            ...state.data,
+            about: { ...state.data.about, ...about },
+          },
+          lastSaved: Date.now(),
+        })),
+
       updateTimeline: (timeline) =>
         set((state) => ({
           data: {
@@ -135,6 +168,48 @@ export const useEditorStore = create<EditorStore>()(
     }),
     {
       name: "editor-storage", // 로컬스토리지 키
+      merge: (persistedState: any, currentState: any) => {
+        const persistedData = persistedState?.data || {};
+
+        return {
+          ...currentState,
+          ...persistedState,
+          data: {
+            ...defaultData,
+            ...persistedData,
+            profile: {
+              ...defaultData.profile,
+              ...(persistedData.profile || {}),
+            },
+            heroStatement: {
+              ...defaultData.heroStatement,
+              ...(persistedData.heroStatement || {}),
+            },
+            featuredProjects: {
+              ...defaultData.featuredProjects,
+              ...(persistedData.featuredProjects || {}),
+            },
+            gallery: {
+              ...defaultData.gallery,
+              ...(persistedData.gallery || {}),
+              items: persistedData.gallery?.items || [],
+            },
+            about: {
+              ...defaultData.about,
+              ...(persistedData.about || {}),
+            },
+            timeline: {
+              ...defaultData.timeline,
+              ...(persistedData.timeline || {}),
+            },
+            contact: {
+              ...defaultData.contact,
+              ...(persistedData.contact || {}),
+              links: persistedData.contact?.links || [],
+            },
+          },
+        };
+      },
       // 저장된 데이터 마이그레이션
       migrate: (persistedState: any, _version: number) => {
         if (persistedState.data?.featuredProjects) {
@@ -145,12 +220,31 @@ export const useEditorStore = create<EditorStore>()(
               const { link, ...rest } = project;
               return {
                 ...rest,
+                concept: project.concept || "",
+                tools: project.tools || "",
+                duration: project.duration || "",
+                participation: project.participation || "",
                 links:
                   project.links || (link ? [{ label: "링크", url: link }] : []),
               };
             },
           );
         }
+
+        if (!persistedState.data?.gallery) {
+          persistedState.data = {
+            ...persistedState.data,
+            gallery: { items: [] },
+          };
+        }
+
+        if (!persistedState.data?.about) {
+          persistedState.data = {
+            ...persistedState.data,
+            about: { style: "", interests: "", bio: "" },
+          };
+        }
+
         return persistedState;
       },
     },

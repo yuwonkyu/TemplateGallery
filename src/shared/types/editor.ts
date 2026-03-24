@@ -4,6 +4,8 @@ export type SectionType =
   | "profile"
   | "heroStatement"
   | "featuredProjects"
+  | "gallery"
+  | "about"
   | "timeline"
   | "contact";
 
@@ -26,6 +28,10 @@ export interface Project {
   id: string;
   title: string;
   description: string;
+  concept: string;
+  tools: string;
+  duration: string;
+  participation: string;
   tags: string[];
   links: {
     label: string;
@@ -34,9 +40,25 @@ export interface Project {
   image?: string;
 }
 
+// 갤러리 작품
+export interface GalleryItem {
+  id: string;
+  title: string;
+  summary: string;
+  mediaType: "image" | "video" | "link";
+  mediaUrl: string;
+  thumbnail: string;
+  tags: string[];
+}
+
 // 대표 프로젝트 섹션
 export interface FeaturedProjectsSection {
   projects: Project[];
+}
+
+// 작품 갤러리 섹션
+export interface GallerySection {
+  items: GalleryItem[];
 }
 
 // 타임라인 항목
@@ -54,6 +76,13 @@ export interface TimelineSection {
   items: TimelineItem[];
 }
 
+// 소개(About) 섹션
+export interface AboutSection {
+  style: string;
+  interests: string;
+  bio: string;
+}
+
 // 연락처 섹션
 export interface ContactSection {
   email: string;
@@ -69,6 +98,8 @@ export interface EditorData {
   profile: ProfileSection;
   heroStatement: HeroStatementSection;
   featuredProjects: FeaturedProjectsSection;
+  gallery: GallerySection;
+  about: AboutSection;
   timeline: TimelineSection;
   contact: ContactSection;
 }
