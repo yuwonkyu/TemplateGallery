@@ -16,7 +16,7 @@ interface EditorActionsProps {
 
 export const EditorActions = ({ resetLabel }: EditorActionsProps) => {
   const searchParams = useSearchParams();
-  const templateId = searchParams.get("template") || "dev-pro";
+  const templateId = searchParams.get("template") || "dev-basic";
   const {
     data,
     resetData,

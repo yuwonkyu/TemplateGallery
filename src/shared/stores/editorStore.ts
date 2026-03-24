@@ -14,7 +14,7 @@ import type {
 } from "@/shared/types/editor";
 
 const STORAGE_PREFIX = "editor-storage";
-const DEFAULT_TEMPLATE_ID = "dev-pro";
+const DEFAULT_TEMPLATE_ID = "dev-basic";
 
 const normalizeTemplateId = (templateId?: string) => {
   if (!templateId) return DEFAULT_TEMPLATE_ID;

@@ -1,6 +1,6 @@
 [
   {
-    "id": "dev-pro",
+    "id": "dev-basic",
     "titleKey": "devPro.title",
     "summaryKey": "devPro.summary",
     "tagKeys": ["developer", "clean", "onePage"],
