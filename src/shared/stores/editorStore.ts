@@ -74,7 +74,7 @@ export const useEditorStore = create<EditorStore>()(
       selectedSection: "profile",
       lastSaved: Date.now(),
 
-      updateData: (newData) =>
+      updateData: (newData: Partial<EditorData>) =>
         set((state) => ({
           data: { ...state.data, ...newData },
           lastSaved: Date.now(),
