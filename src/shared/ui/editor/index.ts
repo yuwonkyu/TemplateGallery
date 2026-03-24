@@ -2,6 +2,8 @@
 export { ProfileForm } from "./ProfileForm";
 export { HeroStatementForm } from "./HeroStatementForm";
 export { FeaturedProjectsForm } from "./FeaturedProjectsForm";
+export { GalleryForm } from "./GalleryForm";
+export { AboutForm } from "./AboutForm";
 export { TimelineForm } from "./TimelineForm";
 export { ContactForm } from "./ContactForm";
 export { EditorPreviewWrapper } from "./EditorPreviewWrapper";

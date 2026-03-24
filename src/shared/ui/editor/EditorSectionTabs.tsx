@@ -20,6 +20,16 @@ const FeaturedProjectsForm = lazy(() =>
     default: mod.FeaturedProjectsForm,
   })),
 );
+const GalleryForm = lazy(() =>
+  import("./GalleryForm").then((mod) => ({
+    default: mod.GalleryForm,
+  })),
+);
+const AboutForm = lazy(() =>
+  import("./AboutForm").then((mod) => ({
+    default: mod.AboutForm,
+  })),
+);
 const TimelineForm = lazy(() =>
   import("./TimelineForm").then((mod) => ({
     default: mod.TimelineForm,
@@ -35,6 +45,8 @@ const sectionComponents: Record<SectionType, React.ComponentType> = {
   profile: ProfileForm,
   heroStatement: HeroStatementForm,
   featuredProjects: FeaturedProjectsForm,
+  gallery: GalleryForm,
+  about: AboutForm,
   timeline: TimelineForm,
   contact: ContactForm,
 };
@@ -43,6 +55,8 @@ const sectionIds: SectionType[] = [
   "profile",
   "heroStatement",
   "featuredProjects",
+  "gallery",
+  "about",
   "timeline",
   "contact",
 ];
