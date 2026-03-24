@@ -75,13 +75,13 @@ export const useEditorStore = create<EditorStore>()(
       lastSaved: Date.now(),
 
       updateData: (newData: Partial<EditorData>) =>
-        set((state) => ({
+        set((state: EditorStore) => ({
           data: { ...state.data, ...newData },
           lastSaved: Date.now(),
         })),
 
-      updateProfile: (profile) =>
-        set((state) => ({
+      updateProfile: (profile: Partial<ProfileSection>) =>
+        set((state: EditorStore) => ({
           data: {
             ...state.data,
             profile: { ...state.data.profile, ...profile },
@@ -89,8 +89,8 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
-      updateHeroStatement: (hero) =>
-        set((state) => ({
+      updateHeroStatement: (hero: Partial<HeroStatementSection>) =>
+        set((state: EditorStore) => ({
           data: {
             ...state.data,
             heroStatement: { ...state.data.heroStatement, ...hero },
@@ -98,8 +98,8 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
-      updateFeaturedProjects: (projects) =>
-        set((state) => ({
+      updateFeaturedProjects: (projects: Partial<FeaturedProjectsSection>) =>
+        set((state: EditorStore) => ({
           data: {
             ...state.data,
             featuredProjects: {
@@ -110,8 +110,8 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
-      updateGallery: (gallery) =>
-        set((state) => ({
+      updateGallery: (gallery: Partial<GallerySection>) =>
+        set((state: EditorStore) => ({
           data: {
             ...state.data,
             gallery: {
@@ -122,8 +122,8 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
-      updateAbout: (about) =>
-        set((state) => ({
+      updateAbout: (about: Partial<AboutSection>) =>
+        set((state: EditorStore) => ({
           data: {
             ...state.data,
             about: { ...state.data.about, ...about },
@@ -131,8 +131,8 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
-      updateTimeline: (timeline) =>
-        set((state) => ({
+      updateTimeline: (timeline: Partial<TimelineSection>) =>
+        set((state: EditorStore) => ({
           data: {
             ...state.data,
             timeline: {
@@ -143,8 +143,8 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
-      updateContact: (contact) =>
-        set((state) => ({
+      updateContact: (contact: Partial<ContactSection>) =>
+        set((state: EditorStore) => ({
           data: {
             ...state.data,
             contact: { ...state.data.contact, ...contact },
@@ -152,7 +152,7 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
-      setSelectedSection: (section) => set({ selectedSection: section }),
+      setSelectedSection: (section: SectionType) => set({ selectedSection: section }),
 
       resetData: () =>
         set({
