@@ -13,6 +13,17 @@ import type {
   ContactSection,
 } from "@/shared/types/editor";
 
+const STORAGE_PREFIX = "editor-storage";
+const DEFAULT_TEMPLATE_ID = "dev-pro";
+
+const normalizeTemplateId = (templateId?: string) => {
+  if (!templateId) return DEFAULT_TEMPLATE_ID;
+  return templateId.trim().toLowerCase();
+};
+
+const buildStorageKey = (templateId?: string) =>
+  `${STORAGE_PREFIX}:${normalizeTemplateId(templateId)}`;
+
 // 기본값
 const defaultData: EditorData = {
   profile: {
@@ -47,6 +58,7 @@ const defaultData: EditorData = {
 };
 
 interface EditorStore extends EditorState {
+  currentTemplateId: string;
   // 데이터 업데이트
   updateData: (data: Partial<EditorData>) => void;
   updateProfile: (profile: Partial<ProfileSection>) => void;
@@ -63,14 +75,25 @@ interface EditorStore extends EditorState {
   // 초기화
   resetData: () => void;
 
+  // 템플릿별 저장소 전환
+  setTemplate: (templateId?: string) => void;
+
+  // 백업/복원
+  exportData: () => string;
+  importData: (jsonText: string) => { ok: boolean; message: string };
+
+  // 전체 로컬 데이터 삭제
+  clearAllLocalData: () => void;
+
   // 로컬스토리지 로드
   loadData: () => void;
 }
 
 export const useEditorStore = create<EditorStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       data: defaultData,
+      currentTemplateId: DEFAULT_TEMPLATE_ID,
       selectedSection: "profile",
       lastSaved: Date.now(),
 
@@ -162,13 +185,126 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         }),
 
+      setTemplate: (templateId?: string) => {
+        const nextTemplateId = normalizeTemplateId(templateId);
+        if (get().currentTemplateId === nextTemplateId) return;
+
+        set({
+          currentTemplateId: nextTemplateId,
+          data: defaultData,
+          selectedSection: "profile",
+          lastSaved: Date.now(),
+        });
+
+        useEditorStore.persist.setOptions({
+          name: buildStorageKey(nextTemplateId),
+        });
+        void useEditorStore.persist.rehydrate();
+      },
+
+      exportData: () => {
+        return JSON.stringify(
+          {
+            version: 1,
+            templateId: get().currentTemplateId,
+            exportedAt: new Date().toISOString(),
+            data: get().data,
+          },
+          null,
+          2,
+        );
+      },
+
+      importData: (jsonText: string) => {
+        try {
+          const parsed = JSON.parse(jsonText) as {
+            data?: Partial<EditorData>;
+          };
+
+          if (!parsed || typeof parsed !== "object" || !parsed.data) {
+            return {
+              ok: false,
+              message: "복원 파일 형식이 올바르지 않습니다.",
+            };
+          }
+
+          const importedData = parsed.data;
+
+          set((state: EditorStore) => ({
+            data: {
+              ...defaultData,
+              ...importedData,
+              profile: {
+                ...defaultData.profile,
+                ...(importedData.profile || {}),
+              },
+              heroStatement: {
+                ...defaultData.heroStatement,
+                ...(importedData.heroStatement || {}),
+              },
+              featuredProjects: {
+                ...defaultData.featuredProjects,
+                ...(importedData.featuredProjects || {}),
+                projects: importedData.featuredProjects?.projects || [],
+              },
+              gallery: {
+                ...defaultData.gallery,
+                ...(importedData.gallery || {}),
+                items: importedData.gallery?.items || [],
+              },
+              about: {
+                ...defaultData.about,
+                ...(importedData.about || {}),
+              },
+              timeline: {
+                ...defaultData.timeline,
+                ...(importedData.timeline || {}),
+                items: importedData.timeline?.items || [],
+              },
+              contact: {
+                ...defaultData.contact,
+                ...(importedData.contact || {}),
+                links: importedData.contact?.links || [],
+              },
+            },
+            selectedSection: state.selectedSection,
+            lastSaved: Date.now(),
+          }));
+
+          return { ok: true, message: "백업 데이터를 복원했습니다." };
+        } catch {
+          return {
+            ok: false,
+            message: "JSON 파일을 읽는 중 오류가 발생했습니다.",
+          };
+        }
+      },
+
+      clearAllLocalData: () => {
+        if (typeof window === "undefined") return;
+
+        Object.keys(window.localStorage).forEach((key) => {
+          if (key.startsWith(`${STORAGE_PREFIX}:`)) {
+            window.localStorage.removeItem(key);
+          }
+        });
+
+        set({
+          data: defaultData,
+          selectedSection: "profile",
+          lastSaved: Date.now(),
+        });
+
+        void useEditorStore.persist.rehydrate();
+      },
+
       loadData: () => {
         // Zustand persist 미들웨어가 자동으로 로드함
         // 필요시 추가 로직 구현
       },
     }),
     {
-      name: "editor-storage", // 로컬스토리지 키
+      name: buildStorageKey(DEFAULT_TEMPLATE_ID), // 템플릿별 로컬스토리지 키
       merge: (persistedState: any, currentState: any) => {
         const persistedData = persistedState?.data || {};
 
