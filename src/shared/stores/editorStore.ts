@@ -152,7 +152,8 @@ export const useEditorStore = create<EditorStore>()(
           lastSaved: Date.now(),
         })),
 
-      setSelectedSection: (section: SectionType) => set({ selectedSection: section }),
+      setSelectedSection: (section: SectionType) =>
+        set({ selectedSection: section }),
 
       resetData: () =>
         set({
