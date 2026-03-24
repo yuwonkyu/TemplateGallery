@@ -7,5 +7,14 @@
     "previewImage": "/templates/FE_base.png",
     "updatedAt": "2026-01-28",
     "popularity": 98
+  },
+  {
+    "id": "artist-grid",
+    "titleKey": "artistGrid.title",
+    "summaryKey": "artistGrid.summary",
+    "tagKeys": ["artist", "visual", "gallery"],
+    "previewImage": "/templates/noting.jpg",
+    "updatedAt": "2026-02-14",
+    "popularity": 89
   }
 ]
