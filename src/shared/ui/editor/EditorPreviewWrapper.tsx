@@ -107,6 +107,19 @@ const ProjectsSection = memo(({ projects }: { projects: any[] }) => {
                   {project.description}
                 </p>
               )}
+              {(project.concept ||
+                project.tools ||
+                project.duration ||
+                project.participation) && (
+                <div className="mt-2 space-y-1 text-xs text-white/65">
+                  {project.concept && <p>의도/컨셉: {project.concept}</p>}
+                  {project.tools && <p>사용 툴: {project.tools}</p>}
+                  {project.duration && <p>작업 기간: {project.duration}</p>}
+                  {project.participation && (
+                    <p>참여도: {project.participation}</p>
+                  )}
+                </div>
+              )}
               {validLinks.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-2">
                   {validLinks.map((link: any, idx: number) => (
@@ -130,6 +143,95 @@ const ProjectsSection = memo(({ projects }: { projects: any[] }) => {
   );
 });
 ProjectsSection.displayName = "ProjectsSection";
+
+const GallerySection = memo(({ items }: { items: any[] }) => {
+  if (items.length === 0) return null;
+
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <h3 className="text-lg font-semibold text-white mb-4">작품 갤러리</h3>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="rounded-xl border border-white/10 bg-black/20 overflow-hidden"
+          >
+            <div className="aspect-4/3 bg-white/5">
+              {item.thumbnail ? (
+                <img
+                  src={item.thumbnail}
+                  alt={item.title || "작품 썸네일"}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="h-full w-full flex items-center justify-center text-xs text-white/35">
+                  썸네일 없음
+                </div>
+              )}
+            </div>
+            <div className="p-3 space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <h4 className="font-medium text-white">
+                  {item.title || "작품 제목"}
+                </h4>
+                <span className="text-[11px] text-white/50 uppercase">
+                  {item.mediaType}
+                </span>
+              </div>
+              {item.summary && (
+                <p className="text-xs text-white/70 whitespace-pre-wrap break-word">
+                  {item.summary}
+                </p>
+              )}
+              {item.mediaUrl && (
+                <a
+                  href={normalizeUrl(item.mediaUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-xs text-blue-400 hover:text-blue-300 transition"
+                >
+                  작품 보기
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+});
+GallerySection.displayName = "GallerySection";
+
+const AboutSection = memo(({ about }: { about: any }) => {
+  if (!about.style && !about.interests && !about.bio) return null;
+
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <h3 className="text-lg font-semibold text-white mb-4">소개</h3>
+      <div className="space-y-3 text-sm text-white/75">
+        {about.style && (
+          <p className="whitespace-pre-wrap break-word">
+            <span className="text-white/55">작업 스타일: </span>
+            {about.style}
+          </p>
+        )}
+        {about.interests && (
+          <p className="whitespace-pre-wrap break-word">
+            <span className="text-white/55">관심 분야: </span>
+            {about.interests}
+          </p>
+        )}
+        {about.bio && (
+          <p className="whitespace-pre-wrap break-word">
+            <span className="text-white/55">간단 이력: </span>
+            {about.bio}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+});
+AboutSection.displayName = "AboutSection";
 
 const TimelineSection = memo(({ items }: { items: any[] }) => {
   if (items.length === 0) return null;
@@ -222,7 +324,15 @@ export const EditorPreviewWrapper = () => {
   const t = useTranslations("editor");
   const common = useTranslations("common");
   const { data } = useEditorStore();
-  const { profile, heroStatement, featuredProjects, timeline, contact } = data;
+  const {
+    profile,
+    heroStatement,
+    featuredProjects,
+    gallery,
+    about,
+    timeline,
+    contact,
+  } = data;
 
   // 비어있는지 체크 (useMemo로 최적화)
   const isEmpty = useMemo(
@@ -230,12 +340,20 @@ export const EditorPreviewWrapper = () => {
       !profile.name &&
       !heroStatement.headline &&
       featuredProjects.projects.length === 0 &&
+      gallery.items.length === 0 &&
+      !about.bio &&
+      !about.style &&
+      !about.interests &&
       timeline.items.length === 0 &&
       !contact.email,
     [
       profile.name,
       heroStatement.headline,
       featuredProjects.projects.length,
+      gallery.items.length,
+      about.bio,
+      about.style,
+      about.interests,
       timeline.items.length,
       contact.email,
     ],
@@ -295,6 +413,8 @@ export const EditorPreviewWrapper = () => {
                 <ProfileSection profile={profile} />
                 <HeroSection heroStatement={heroStatement} />
                 <ProjectsSection projects={featuredProjects.projects} />
+                <GallerySection items={gallery.items} />
+                <AboutSection about={about} />
                 <TimelineSection items={timeline.items} />
                 <ContactSection contact={contact} />
               </div>

@@ -18,7 +18,15 @@ const normalizeUrl = (url: string): string => {
  * @returns HTML 파일 내용
  */
 export const generatePortfolioHTML = (data: EditorData): string => {
-  const { profile, heroStatement, featuredProjects, timeline, contact } = data;
+  const {
+    profile,
+    heroStatement,
+    featuredProjects,
+    gallery,
+    about,
+    timeline,
+    contact,
+  } = data;
 
   const htmlContent = `<!DOCTYPE html>
 <html lang="ko">
@@ -156,6 +164,14 @@ export const generatePortfolioHTML = (data: EditorData): string => {
       line-height: 1.8;
     }
 
+    .project-meta {
+      margin: 10px 0 14px;
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      color: #666;
+    }
+
     .project a {
       color: #667eea;
       text-decoration: none;
@@ -169,6 +185,55 @@ export const generatePortfolioHTML = (data: EditorData): string => {
     .timeline {
       position: relative;
       padding-left: 30px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .gallery-thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+
+    .gallery-body {
+      padding: 14px;
+    }
+
+    .gallery-body h3 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .gallery-meta {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .about {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .about p {
+      color: #555;
+      margin-bottom: 12px;
+      line-height: 1.8;
     }
 
     .timeline-item {
@@ -316,6 +381,19 @@ export const generatePortfolioHTML = (data: EditorData): string => {
           <h3>${escapeHtml(project.title || "프로젝트명")}</h3>
           ${project.description ? `<p>${escapeHtml(project.description).replace(/\n/g, "<br>")}</p>` : ""}
           ${
+            project.concept ||
+            project.tools ||
+            project.duration ||
+            project.participation
+              ? `<div class="project-meta">
+          ${project.concept ? `<div><strong>의도/컨셉:</strong> ${escapeHtml(project.concept)}</div>` : ""}
+          ${project.tools ? `<div><strong>사용 툴:</strong> ${escapeHtml(project.tools)}</div>` : ""}
+          ${project.duration ? `<div><strong>작업 기간:</strong> ${escapeHtml(project.duration)}</div>` : ""}
+          ${project.participation ? `<div><strong>참여도:</strong> ${escapeHtml(project.participation)}</div>` : ""}
+          </div>`
+              : ""
+          }
+          ${
             project.links && project.links.length > 0
               ? `<div class="project-links">${project.links
                   .filter((link: any) => link.label?.trim() && link.url?.trim())
@@ -330,6 +408,42 @@ export const generatePortfolioHTML = (data: EditorData): string => {
           )
           .join("")}
       </div>
+    </section>`
+        : ""
+    }
+
+    <!-- Gallery -->
+    ${
+      gallery.items.length > 0
+        ? `<section>
+      <h2>작품 갤러리</h2>
+      <div class="gallery-grid">
+        ${gallery.items
+          .map(
+            (item) => `<article class="gallery-item">
+          ${item.thumbnail ? `<img class="gallery-thumb" src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title || "작품")}" />` : `<div class="gallery-thumb"></div>`}
+          <div class="gallery-body">
+            <h3>${escapeHtml(item.title || "작품 제목")}</h3>
+            <div class="gallery-meta">${escapeHtml(item.mediaType || "image")}</div>
+            ${item.summary ? `<p>${escapeHtml(item.summary).replace(/\n/g, "<br>")}</p>` : ""}
+            ${item.mediaUrl ? `<a href="${escapeHtml(normalizeUrl(item.mediaUrl))}" target="_blank" rel="noopener noreferrer">작품 보기</a>` : ""}
+          </div>
+        </article>`,
+          )
+          .join("")}
+      </div>
+    </section>`
+        : ""
+    }
+
+    <!-- About -->
+    ${
+      about.style || about.interests || about.bio
+        ? `<section class="about">
+      <h2>소개</h2>
+      ${about.style ? `<p><strong>작업 스타일:</strong> ${escapeHtml(about.style).replace(/\n/g, "<br>")}</p>` : ""}
+      ${about.interests ? `<p><strong>관심 분야:</strong> ${escapeHtml(about.interests).replace(/\n/g, "<br>")}</p>` : ""}
+      ${about.bio ? `<p><strong>간단 이력:</strong> ${escapeHtml(about.bio).replace(/\n/g, "<br>")}</p>` : ""}
     </section>`
         : ""
     }
